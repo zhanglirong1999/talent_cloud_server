@@ -17,6 +17,7 @@ public class Company {
     Integer count;
     String type;
     Integer deleted;
+    @Column(name = "takeCount")
     String takeCount;
     String city;
     String passRate;
