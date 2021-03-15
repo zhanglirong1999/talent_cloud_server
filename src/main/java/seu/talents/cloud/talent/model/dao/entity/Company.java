@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,5 +22,6 @@ public class Company {
     @Column(name = "takeCount")
     String takeCount;
     String city;
+    @Column(name = "passRate")
     String passRate;
 }
