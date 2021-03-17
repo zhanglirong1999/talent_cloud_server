@@ -39,4 +39,7 @@ public class CONST {
                 "</xml>";
     }
 
+    public static final String avatar =
+            "";
+
 }

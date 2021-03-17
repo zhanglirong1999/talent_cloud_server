@@ -11,4 +11,5 @@ public interface CompanyService {
     Object getCompanyInfo(Long cid) throws Exception;
     Object getSearch(String keyword,Integer pageIndex);
     Object getCompanyList(String key,Integer pageIndex);
+    Object getNameList();
 }

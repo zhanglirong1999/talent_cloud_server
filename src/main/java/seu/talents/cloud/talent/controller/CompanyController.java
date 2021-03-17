@@ -75,9 +75,18 @@ public class CompanyController {
      * @param key
      * @return
      */
-    @GetMapping("list")
+    @GetMapping("/list")
     public Object getCompanyList(@RequestParam Integer pageIndex,@RequestParam String key){
         return companyService.getCompanyList(key, pageIndex);
+    }
+
+    /**
+     * 获取所有公司的cid和name
+     * @return
+     */
+    @GetMapping("/name")
+    public Object getNameList(){
+        return companyService.getNameList();
     }
 
 

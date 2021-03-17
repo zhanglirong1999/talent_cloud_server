@@ -9,5 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Register {
     String name;
-    String avatar;
+    String phone;
+    String college;
+    String gradYear;
+    String gradDegree;
+    String company;
+    String job;
+    String canRecom;
 }
