@@ -31,6 +31,6 @@ public class Account {
     private String job;
     @Column(name = "canRecom")
     private String canRecom;
-
+    private String password;
 
 }

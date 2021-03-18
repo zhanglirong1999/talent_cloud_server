@@ -17,6 +17,7 @@ import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Account;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
+import seu.talents.cloud.talent.model.dto.post.AdminDTO;
 import seu.talents.cloud.talent.model.dto.post.LoginDTO;
 import seu.talents.cloud.talent.model.dto.post.Register;
 import seu.talents.cloud.talent.service.AccountService;
@@ -180,6 +181,19 @@ public class AccountController {
         String avatarUrl = (String)result.get("avatarUrl");
         accountMapper.updateAvatar(avatarUrl,unionId,accountId);
         return avatarUrl;
+    }
+
+    /**
+     * 管理员登录
+     * @param adminDTO
+     * @return
+     */
+    @PostMapping("/admin")
+    public Object adminLogin(@RequestBody AdminDTO adminDTO){
+        String accountId = accountService.adminLogin(adminDTO);
+        String token = TokenUtil.createToken(accountId);
+        System.out.println(token);
+        return token;
     }
 
 

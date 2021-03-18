@@ -6,6 +6,7 @@ import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Account;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
+import seu.talents.cloud.talent.model.dto.post.AdminDTO;
 import seu.talents.cloud.talent.model.dto.post.Register;
 import seu.talents.cloud.talent.service.AccountService;
 import seu.talents.cloud.talent.util.ConstantUtil;
@@ -61,9 +62,15 @@ public class AccountServiceImpl implements AccountService {
         return map;
     }
 
-
-
-
+    @Override
+    public String adminLogin(AdminDTO adminDTO) {
+        Account account = accountMapper.getAdmin(adminDTO.getUsername(),adminDTO.getPassword());
+        if(account==null){
+            throw new BizException(ConstantUtil.BizExceptionCause.ERROR_ADMIN);
+        }
+        String accountId = account.getAccountId();
+        return accountId;
+    }
 
 
 }

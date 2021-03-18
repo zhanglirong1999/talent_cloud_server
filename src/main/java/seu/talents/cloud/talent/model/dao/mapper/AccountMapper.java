@@ -12,4 +12,7 @@ public interface AccountMapper extends Mapper<Account> {
 
     @Update("UPDATE account set avatar='${avatar}',unionId='${unionId}' WHERE accountId='${aid}'")
     Integer updateAvatar(String avatar,String unionId,String aid);
+
+    @Select("SELECT * FROM account WHERE name='${name}' and password='${password}'")
+    Account getAdmin(String name,String password);
 }
