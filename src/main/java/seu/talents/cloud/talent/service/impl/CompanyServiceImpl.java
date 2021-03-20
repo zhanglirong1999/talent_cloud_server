@@ -19,6 +19,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void addCompany(CompanyDTO companyDTO) {
         Company company = new Company();
+        int count = companyMapper.getCompanyCount(companyDTO.getName());
+        if(count>0){
+            throw new BizException(ConstantUtil.BizExceptionCause.HAVE_EXSIT);
+        }
         company.setCid(ConstantUtil.generateId());
         company.setName(companyDTO.getName());
         company.setLogo(companyDTO.getLogo());

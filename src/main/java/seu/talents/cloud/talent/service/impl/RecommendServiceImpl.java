@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import seu.talents.cloud.talent.model.dao.entity.Recommend;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
+import seu.talents.cloud.talent.model.dao.mapper.CompanyMapper;
 import seu.talents.cloud.talent.model.dao.mapper.RecommendMapper;
 import seu.talents.cloud.talent.model.dao.mapper.RecommendPictureMapper;
 import seu.talents.cloud.talent.model.dto.post.RecommendDTO;
@@ -21,6 +22,8 @@ public class RecommendServiceImpl implements RecommendService {
     private RecommendMapper recommendMapper;
     @Autowired
     private RecommendPictureMapper recommendPictureMapper;
+    @Autowired
+    private CompanyMapper companyMapper;
     @Autowired
     private AccountMapper accountMapper;
 
@@ -40,6 +43,8 @@ public class RecommendServiceImpl implements RecommendService {
         recommend.setInfo(recommendDTO.getInfo());
         recommend.setMethod(recommendDTO.getMethod());
         recommend.setAid(accountId);
+        recommend.setType(recommendDTO.getType());
+        recommend.setUnit(recommendDTO.getUnit());
         recommendMapper.insert(recommend);
         Iterator<String> iterator = recommendDTO.getImg().iterator();
         while(iterator.hasNext()){
@@ -71,6 +76,8 @@ public class RecommendServiceImpl implements RecommendService {
         recommend.setInfo(recommendDTO.getInfo());
         recommend.setMethod(recommendDTO.getMethod());
         recommend.setCreateTime(recommendDTO.getCreateTime());
+        recommend.setType(recommendDTO.getType());
+        recommend.setUnit(recommendDTO.getUnit());
         recommendMapper.updateByExample(recommend,Example.builder(Recommend.class).where(Sqls.custom().andEqualTo("rid",recommendDTO.getRid()))
                 .build());
     }
@@ -96,6 +103,8 @@ public class RecommendServiceImpl implements RecommendService {
             map.put("createTime",recommend.getCreateTime());
             map.put("account",accountMapper.getName(recommend.getAid()));
             map.put("img",recommendPictureMapper.getUrl(recommend.getRid()));
+            map.put("gap",accountMapper.getGradYear(recommend.getAid()));
+            map.put("college",accountMapper.getCollage(recommend.getAid()));
             list.add(map);
         }
         return list;
@@ -119,6 +128,8 @@ public class RecommendServiceImpl implements RecommendService {
         map.put("createTime",recommend.getCreateTime());
         map.put("account",accountMapper.getName(recommend.getAid()));
         map.put("img",recommendPictureMapper.getUrl(recommend.getRid()));
+        map.put("accountId",recommend.getAid());
+        map.put("companyId",companyMapper.getCompanyId(recommend.getName()));
         return map;
     }
 

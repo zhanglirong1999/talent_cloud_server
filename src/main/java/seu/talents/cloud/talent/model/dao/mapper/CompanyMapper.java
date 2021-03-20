@@ -26,4 +26,10 @@ public interface CompanyMapper extends Mapper<Company> {
 
     @Select("select cid,name from company where deleted=0")
     List<Map<String,Object>> getNameList();
+
+    @Select("select cid from company where name='${name}'")
+    String getCompanyId(String name);
+
+    @Select("select count(*) from company where name='${name}'")
+    Integer getCompanyCount(String name);
 }

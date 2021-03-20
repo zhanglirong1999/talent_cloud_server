@@ -27,7 +27,8 @@ public class ConstantUtil {
         NOT_OPENID(7,"获取openid失败"),
         NOT_USER(8,"找不到此用户"),
         HAS_DELETE(9,"此公司已经注销"),
-        ERROR_ADMIN(10,"管理员用户名或密码错误")
+        ERROR_ADMIN(10,"管理员用户名或密码错误"),
+        HAVE_EXSIT(11,"此公司已存在")
 
 
 
