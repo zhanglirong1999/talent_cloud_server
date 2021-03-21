@@ -2,6 +2,7 @@ package seu.talents.cloud.talent.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import seu.talents.cloud.talent.model.dao.entity.Company;
 import seu.talents.cloud.talent.model.dao.entity.Recommend;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
 import seu.talents.cloud.talent.model.dao.mapper.CompanyMapper;
@@ -105,6 +106,8 @@ public class RecommendServiceImpl implements RecommendService {
             map.put("img",recommendPictureMapper.getUrl(recommend.getRid()));
             map.put("gap",accountMapper.getGradYear(recommend.getAid()));
             map.put("college",accountMapper.getCollage(recommend.getAid()));
+            map.put("unit",recommend.getUnit());
+            map.put("type",recommend.getType());
             list.add(map);
         }
         return list;
@@ -130,6 +133,14 @@ public class RecommendServiceImpl implements RecommendService {
         map.put("img",recommendPictureMapper.getUrl(recommend.getRid()));
         map.put("accountId",recommend.getAid());
         map.put("companyId",companyMapper.getCompanyId(recommend.getName()));
+        map.put("unit",recommend.getUnit());
+        map.put("type",recommend.getType());
+        map.put("job",accountMapper.getJob(recommend.getAid()));
+        Company company = companyMapper.getCompany(recommend.getName());
+        map.put("heat",company.getHeat());
+        map.put("count",company.getCount());
+        map.put("takeCount",company.getTakeCount());
+        map.put("passRate",company.getPassRate());
         return map;
     }
 

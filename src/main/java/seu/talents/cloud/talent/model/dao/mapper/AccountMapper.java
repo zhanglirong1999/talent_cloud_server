@@ -16,11 +16,13 @@ public interface AccountMapper extends Mapper<Account> {
     @Select("SELECT collage from account where accountId='${aid}'")
     String getCollage(String aid);
 
+    @Select("SELECT job from account where accountId='${aid}'")
+    String getJob(String aid);
+
     @Update("UPDATE account set avatar='${avatar}',unionId='${unionId}' WHERE accountId='${aid}'")
     Integer updateAvatar(String avatar,String unionId,String aid);
 
     @Select("SELECT * FROM account WHERE name='${name}' and password='${password}'")
     Account getAdmin(String name,String password);
-
 
 }
