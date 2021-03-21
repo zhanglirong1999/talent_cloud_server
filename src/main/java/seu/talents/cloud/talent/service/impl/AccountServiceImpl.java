@@ -36,7 +36,8 @@ public class AccountServiceImpl implements AccountService {
         account.setCompany(register.getCompany());
         account.setJob(register.getJob());
         account.setCanRecom(register.getCanRecom());
-        accountMapper.updateByPrimaryKey(account);
+        account.setAvatar(CONST.avatar);
+        accountMapper.updateByPrimaryKeySelective(account);
     }
 
     @Override
@@ -59,6 +60,7 @@ public class AccountServiceImpl implements AccountService {
         map.put("gradYear",account.getGradYear());
         map.put("company",account.getCompany());
         map.put("job",account.getJob());
+        map.put("college",account.getCollage());
         return map;
     }
 

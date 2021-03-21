@@ -84,8 +84,8 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
-    public Object getRecommendList(Integer pageIndex) {
-        Iterator<Recommend> iterator= recommendMapper.getRecommendList(pageIndex).iterator();
+    public Object getRecommendList(Integer pageIndex,Integer type) {
+        Iterator<Recommend> iterator= recommendMapper.getRecommendList(pageIndex,type).iterator();
         List<Map<String,Object>> list = new LinkedList<>();
         while(iterator.hasNext()){
             Recommend recommend = iterator.next();

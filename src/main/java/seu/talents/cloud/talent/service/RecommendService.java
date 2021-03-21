@@ -9,7 +9,7 @@ public interface RecommendService {
     void addRecommend(RecommendDTO recommendDTO,String accountId);
     void deleteRecommend(Long rid);
     void modifyRecommend(RecommendModifyDTO recommendModifyDTO);
-    Object getRecommendList(Integer pageIndex);
+    Object getRecommendList(Integer pageIndex,Integer type);
     Object getRecommendDetail(Long rid);
     Object getRecommendSearch(String keyword,Integer pageIndex);
 }
