@@ -98,7 +98,12 @@ public class AccountController {
             );
             if(account != null){
                 String accountId = account.getAccountId();
-                register.setIsRegister(true);
+                String name = account.getName();
+                if(name==null){
+                    register.setIsRegister(false);
+                }else{
+                    register.setIsRegister(true);
+                }
                 register.setToken(TokenUtil.createToken(accountId));
                 return register;
             }else {

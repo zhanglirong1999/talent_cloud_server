@@ -132,11 +132,11 @@ public class RecommendServiceImpl implements RecommendService {
         map.put("account",accountMapper.getName(recommend.getAid()));
         map.put("img",recommendPictureMapper.getUrl(recommend.getRid()));
         map.put("accountId",recommend.getAid());
-        map.put("companyId",companyMapper.getCompanyId(recommend.getName()));
+        map.put("companyId",companyMapper.getCompanyId(recommend.getCompany()));
         map.put("unit",recommend.getUnit());
         map.put("type",recommend.getType());
         map.put("job",accountMapper.getJob(recommend.getAid()));
-        Company company = companyMapper.getCompany(recommend.getName());
+        Company company = companyMapper.getCompany(recommend.getCompany());
         map.put("heat",company.getHeat());
         map.put("count",company.getCount());
         map.put("takeCount",company.getTakeCount());

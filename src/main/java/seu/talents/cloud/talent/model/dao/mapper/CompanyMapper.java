@@ -33,6 +33,6 @@ public interface CompanyMapper extends Mapper<Company> {
     @Select("select count(*) from company where name='${name}'")
     Integer getCompanyCount(String name);
 
-    @Select("select * from company where  where name='${name}'")
+    @Select("select * from company where name='${name}'")
     Company getCompany(String name);
 }

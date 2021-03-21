@@ -42,7 +42,7 @@ public class RecommendController {
      * @param rid
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @DeleteMapping("/delete")
     public Object deleteRecommend(@RequestParam Long rid){
         recommendService.deleteRecommend(rid);
@@ -54,7 +54,7 @@ public class RecommendController {
      * @param recommendModifyDTO
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @PostMapping("/modify")
     public Object modifyRecommend(@RequestBody RecommendModifyDTO recommendModifyDTO){
         recommendService.modifyRecommend(recommendModifyDTO);
@@ -65,7 +65,7 @@ public class RecommendController {
      * 获取内推list
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @GetMapping("/list")
     public Object getRecommend(@RequestParam Integer pageIndex){
         return recommendService.getRecommendList(pageIndex);
@@ -88,7 +88,7 @@ public class RecommendController {
      * @param pageIndex
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @GetMapping("/search")
     public Object getRecommendSearch(@RequestParam String keyword,@RequestParam Integer pageIndex){
         return recommendService.getRecommendSearch(keyword, pageIndex);
