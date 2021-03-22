@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.talents.cloud.talent.model.dao.mapper.RecruitmentMapper">
+    <select id="getAll" resultType="seu.talents.cloud.talent.model.dao.entity.Recruitment">
+        SELECT recruitmentName, detailLink, city, time
+        FROM recruitment
+        WHERE deleted = 0
+    </select>
+
+    <select id="searchRecruitment" resultType="seu.talents.cloud.talent.model.dao.entity.Recruitment">
+        SELECT recruitmentName, detailLink, city, time
+        FROM recruitment
+        WHERE deleted = 0
+        <if test="keyWord != null">
+            AND recruitmentName LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
+        </if>
+        <if test="range != null">
+            AND publishRange = #{range}
+        </if>
+        <if test="city != null">
+            AND city LIKE CONCAT(CONCAT('%', #{city}), '%')
+        </if>
+        <if test="time != null">
+            <if test='time == "今天"'>
+                AND TO_DAYS(time) = TO_DAYS(NOW())
+            </if>
+            <if test='time == "近三天"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 3 DAY) &lt;= DATE(time)
+            </if>
+            <if test='time == "近一周"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(time)
+            </if>
+            <if test='time == "近两周"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 14 DAY) &lt;= DATE(time)
+            </if>
+            <if test='time == "近一月"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(time)
+            </if>
+            <if test='time == "近两月"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 60 DAY) &lt;= DATE(time)
+            </if>
+        </if>
+    </select>
+
+</mapper>

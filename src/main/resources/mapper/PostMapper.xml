@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.talents.cloud.talent.model.dao.mapper.PostMapper">
+    <select id="getAll" resultType="seu.talents.cloud.talent.model.dao.entity.Post">
+        SELECT postName, detailLink, companyName, companyLink, city, industry, time
+        FROM post
+        WHERE deleted = 0 AND postType = #{postType}
+    </select>
+
+    <select id="searchPost" resultType="seu.talents.cloud.talent.model.dao.entity.Post">
+        SELECT postName, detailLink, companyName, companyLink, city, industry, time
+        FROM post
+        WHERE deleted = 0 AND postType = #{postType}
+        <if test="keyWord != null">
+            AND (
+                postName LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
+                OR companyName LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
+            )
+        </if>
+        <if test="industry != null">
+            AND industry = #{industry}
+        </if>
+        <if test="skill != null">
+            AND skill = #{skill}
+        </if>
+        <if test="city != null">
+            AND city LIKE CONCAT(CONCAT('%', #{city}), '%')
+        </if>
+        <if test="salary != null">
+            AND salary = #{salary}
+        </if>
+        <if test="education != null">
+            AND education = #{education}
+        </if>
+        <if test="time != null">
+            <if test='time == "今天"'>
+                AND TO_DAYS(time) = TO_DAYS(NOW())
+            </if>
+            <if test='time == "近三天"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 3 DAY) &lt;= DATE(time)
+            </if>
+            <if test='time == "近一周"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(time)
+            </if>
+            <if test='time == "近两周"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 14 DAY) &lt;= DATE(time)
+            </if>
+            <if test='time == "近一月"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(time)
+            </if>
+            <if test='time == "近两月"'>
+                AND DATE_SUB(CURDATE(), INTERVAL 60 DAY) &lt;= DATE(time)
+            </if>
+        </if>
+        <if test="nature != null">
+            AND nature = #{nature}
+        </if>
+        <if test="scale != null">
+            AND scale = #{scale}
+        </if>
+    </select>
+
+
+</mapper>
