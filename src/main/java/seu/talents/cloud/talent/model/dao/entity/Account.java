@@ -17,12 +17,20 @@ public class Account {
     private String accountId;
     @Column(name = "unionId")
     private String unionId;
-
     private String name;
-
     private String avatar;
-    @Column(name = "lastTime")
-    private Date lastTime;
-
+    private String collage;
+    @Column(name = "gradYear")
+    private String gradYear;
+    private String phone;
+    @Column(name = "openId")
+    private String openId;
+    @Column(name="gradDegree")
+    private String gradDegree;
+    private String company;
+    private String job;
+    @Column(name = "canRecom")
+    private String canRecom;
+    private String password;
 
 }

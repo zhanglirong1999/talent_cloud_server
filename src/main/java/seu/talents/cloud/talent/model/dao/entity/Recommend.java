@@ -24,4 +24,6 @@ public class Recommend {
     String method;
     @Column(name = "createTime")
     String createTime;
+    Integer type;
+    Integer unit;
 }

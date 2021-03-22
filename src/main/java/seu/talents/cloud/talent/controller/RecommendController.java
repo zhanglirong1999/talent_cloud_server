@@ -1,5 +1,6 @@
 package seu.talents.cloud.talent.controller;
 
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import seu.talents.cloud.talent.common.CONST;
@@ -42,7 +43,7 @@ public class RecommendController {
      * @param rid
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @DeleteMapping("/delete")
     public Object deleteRecommend(@RequestParam Long rid){
         recommendService.deleteRecommend(rid);
@@ -54,7 +55,7 @@ public class RecommendController {
      * @param recommendModifyDTO
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @PostMapping("/modify")
     public Object modifyRecommend(@RequestBody RecommendModifyDTO recommendModifyDTO){
         recommendService.modifyRecommend(recommendModifyDTO);
@@ -65,10 +66,11 @@ public class RecommendController {
      * 获取内推list
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @GetMapping("/list")
-    public Object getRecommend(@RequestParam Integer pageIndex){
-        return recommendService.getRecommendList(pageIndex);
+    public Object getRecommend(@RequestParam Integer pageIndex,
+                               @RequestParam Integer type){
+        return recommendService.getRecommendList(pageIndex,type);
     }
 
     /**
@@ -76,7 +78,7 @@ public class RecommendController {
      * @param rid
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @GetMapping("/detail")
     public Object getDetail(@RequestParam Long rid){
         return recommendService.getRecommendDetail(rid);
@@ -88,7 +90,7 @@ public class RecommendController {
      * @param pageIndex
      * @return
      */
-//    @TokenRequired
+    @TokenRequired
     @GetMapping("/search")
     public Object getRecommendSearch(@RequestParam String keyword,@RequestParam Integer pageIndex){
         return recommendService.getRecommendSearch(keyword, pageIndex);

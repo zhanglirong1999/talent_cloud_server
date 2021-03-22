@@ -1,7 +1,13 @@
 package seu.talents.cloud.talent.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import lombok.Data;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -11,18 +17,21 @@ import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Account;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
+import seu.talents.cloud.talent.model.dto.post.AdminDTO;
+import seu.talents.cloud.talent.model.dto.post.LoginDTO;
 import seu.talents.cloud.talent.model.dto.post.Register;
 import seu.talents.cloud.talent.service.AccountService;
 import seu.talents.cloud.talent.util.ConstantUtil;
 import seu.talents.cloud.talent.util.RedisUtil;
 import seu.talents.cloud.talent.util.TokenUtil;
+import seu.talents.cloud.talent.util.WXBizDataCryptUtil;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -89,15 +98,19 @@ public class AccountController {
             );
             if(account != null){
                 String accountId = account.getAccountId();
-                register.setIsRegister(true);
+                String name = account.getName();
+                if(name==null){
+                    register.setIsRegister(false);
+                }else{
+                    register.setIsRegister(true);
+                }
                 register.setToken(TokenUtil.createToken(accountId));
                 return register;
             }else {
                 //需要新注册
                 Account newAccount = new Account();
-                newAccount.setUnionId(openid);
+                newAccount.setOpenId(openid);
                 newAccount.setAccountId(UUID.randomUUID().toString());
-                newAccount.setLastTime(new Date());
                 accountMapper.insertSelective(newAccount);
                 String token = TokenUtil.createToken(newAccount.getAccountId());
                 register.setToken(token);
@@ -121,13 +134,12 @@ public class AccountController {
      * @return
      */
     @TokenRequired
-    @PostMapping("/register")
+    @PostMapping("/alumni")
     public Object test(
             @RequestBody Register register
     ){
         //获取accountId
         String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
-        System.out.println(accountId);
         accountService.registerUser(register,accountId);
         return "success";
     }
@@ -152,5 +164,43 @@ public class AccountController {
         String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
         return accountService.getUserInfo(accountId);
     }
+
+    /**
+     * 获取头像和unionId
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @TokenRequired
+    @PostMapping("/getAvatar")
+    public Object login(@RequestBody LoginDTO param) throws Exception {
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("https://api.weixin.qq.com/sns/jscode2session?appid="+CONST.appId+"&secret="+CONST.appSecret+"&js_code="+param.getCode()+"&grant_type=authorization_code").build();
+        Call call = client.newCall(request);
+        Response response = call.execute();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> map = objectMapper.readValue(response.body().string(), new TypeReference<Map<String,Object>>(){});
+        Map<String, Object> result = WXBizDataCryptUtil.decrypt((String)map.get("session_key"), param.getEncryptedData(), param.getIv());
+        String unionId = (String)result.get("unionId");
+        String avatarUrl = (String)result.get("avatarUrl");
+        accountMapper.updateAvatar(avatarUrl,unionId,accountId);
+        return avatarUrl;
+    }
+
+    /**
+     * 管理员登录
+     * @param adminDTO
+     * @return
+     */
+    @PostMapping("/admin")
+    public Object adminLogin(@RequestBody AdminDTO adminDTO){
+        String accountId = accountService.adminLogin(adminDTO);
+        String token = TokenUtil.createToken(accountId);
+        System.out.println(token);
+        return token;
+    }
+
+
 
 }

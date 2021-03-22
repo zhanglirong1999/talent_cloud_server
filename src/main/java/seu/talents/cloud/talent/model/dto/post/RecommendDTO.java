@@ -17,4 +17,6 @@ public class RecommendDTO {
     String info;
     String method;
     List<String> img;
+    Integer type;
+    Integer unit;
 }

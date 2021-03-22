@@ -79,9 +79,6 @@ public class DynamicParsePostServiceImpl implements PostService {
 
     @Override
     public List<Post> getPostInformationByPage(Integer pageIndex, Integer pageSize, Integer postType) {
-        if (pageIndex == null || pageIndex <= 0) {
-            throw new BizException(ConstantUtil.BizExceptionCause.PAGE_INDEX_OUT_OF_RANGE);
-        }
         return requestAndParseHtml(
                 pageIndex,
                 postType == 0 ? httpRequestConstValue.getPostUrlTemplateForGetFullTimeJob() : httpRequestConstValue.getPostUrlTemplateForGetIntern(),

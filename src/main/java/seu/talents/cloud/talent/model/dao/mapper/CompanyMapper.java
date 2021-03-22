@@ -23,4 +23,16 @@ public interface CompanyMapper extends Mapper<Company> {
 
     @Select("select * from company where deleted=0 order by count desc limit ${pageIndex},20")
     List<Map<String,Object>> getCompanyListByCount(@Param("pageIndex") Integer pageIndex);
+
+    @Select("select cid,name from company where deleted=0")
+    List<Map<String,Object>> getNameList();
+
+    @Select("select cid from company where name='${name}'")
+    String getCompanyId(String name);
+
+    @Select("select count(*) from company where name='${name}'")
+    Integer getCompanyCount(String name);
+
+    @Select("select * from company where name='${name}'")
+    Company getCompany(String name);
 }

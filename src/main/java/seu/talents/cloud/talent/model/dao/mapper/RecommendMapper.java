@@ -14,13 +14,14 @@ public interface RecommendMapper extends Mapper<Recommend> {
     @Delete("DELETE FROM recommend WHERE rid=${rid}")
     Integer deleteRecommend(Long rid);
 
-    @Select("SELECT * FROM recommend ORDER BY createTime DESC LIMIT ${pageIndex},20")
-    List<Recommend> getRecommendList(Integer pageIndex);
+    @Select("SELECT * FROM recommend WHERE type=${type} ORDER BY createTime DESC LIMIT ${pageIndex},20")
+    List<Recommend> getRecommendList(Integer pageIndex,Integer type);
 
     @Select("SELECT * FROM recommend WHERE rid=${rid}")
     Recommend getRecommend(Long rid);
 
     @Select("SELECT * FROM recommend WHERE name like '%${keyword}%' ORDER BY createTime DESC LIMIT ${pageIndex},20")
     List<Recommend> getRecommendSearch(String keyword,Integer pageIndex);
+
 
 }
