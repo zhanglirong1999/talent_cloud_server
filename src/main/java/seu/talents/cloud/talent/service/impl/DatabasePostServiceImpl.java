@@ -43,4 +43,19 @@ public class DatabasePostServiceImpl implements PostService {
                 postSearchDTO.getScale()
         );
     }
+
+    @Override
+    public void addPost(Post post) {
+        postMapper.add(post);
+    }
+
+    @Override
+    public void deleteById(Long postId) {
+        postMapper.deleteById(postId);
+    }
+
+    @Override
+    public void updateById(Post post) {
+        postMapper.updateById(post);
+    }
 }

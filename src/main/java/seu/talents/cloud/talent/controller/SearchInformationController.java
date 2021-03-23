@@ -2,10 +2,7 @@ package seu.talents.cloud.talent.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.model.dao.entity.*;
 import seu.talents.cloud.talent.model.dto.post.*;
@@ -16,6 +13,7 @@ import java.util.List;
 @RestController
 @WebResponse
 @RequestMapping("/search")
+@CrossOrigin
 public class SearchInformationController {
     private final PostService dynamicParsePostService;
     private final PostService databasePostService;

@@ -10,4 +10,7 @@ import java.util.List;
 public interface LectureMapper extends Mapper<Lecture> {
     List<Lecture> getAll();
     List<Lecture> searchLecture(String keyWord, String time);
+    void add(Lecture lecture);
+    void deleteById(Long lectureId);
+    void updateById(Lecture lecture);
 }

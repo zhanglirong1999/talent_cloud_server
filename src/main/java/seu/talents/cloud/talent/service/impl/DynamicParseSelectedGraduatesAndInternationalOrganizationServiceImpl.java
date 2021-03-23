@@ -97,4 +97,16 @@ public class DynamicParseSelectedGraduatesAndInternationalOrganizationServiceImp
                 dto.getPageIndex()
         );
     }
+
+    @Override
+    public void add(SelectedGraduatesOrInternationalOrganization selectedGraduatesOrInternationalOrganization) {
+    }
+
+    @Override
+    public void deleteById(Long id) {
+    }
+
+    @Override
+    public void updateById(SelectedGraduatesOrInternationalOrganization selectedGraduatesOrInternationalOrganization) {
+    }
 }

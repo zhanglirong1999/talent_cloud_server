@@ -104,4 +104,16 @@ public class DynamicParsePostServiceImpl implements PostService {
                 postSearchDTO.getPageIndex()
         );
     }
+
+    @Override
+    public void addPost(Post post) {
+    }
+
+    @Override
+    public void deleteById(Long postId) {
+    }
+
+    @Override
+    public void updateById(Post post) {
+    }
 }

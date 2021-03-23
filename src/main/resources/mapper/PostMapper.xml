@@ -2,10 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seu.talents.cloud.talent.model.dao.mapper.PostMapper">
     <select id="getAll" resultType="seu.talents.cloud.talent.model.dao.entity.Post">
-        SELECT postName, detailLink, companyName, companyLink, city, industry, time
+        SELECT
+               postId,
+               postName,
+               detailLink,
+               companyName,
+               companyLink,
+               city,
+               industry,
+               time,
+               postType,
+               skill,
+               salary,
+               education,
+               nature,
+               scale
         FROM post
         WHERE deleted = 0 AND postType = #{postType}
     </select>
+
+    <insert id="add" parameterType="seu.talents.cloud.talent.model.dao.entity.Post">
+        INSERT INTO post (
+            postId,
+            postName,
+            detailLink,
+            companyName,
+            companyLink,
+            city,
+            industry,
+            postType,
+            skill,
+            salary,
+            education,
+            nature,
+            scale
+        ) VALUES (
+            #{postId, jdbcType=BIGINT},
+            #{postName, jdbcType=VARCHAR},
+            #{detailLink, jdbcType=VARCHAR},
+            #{companyName, jdbcType=VARCHAR},
+            #{companyLink, jdbcType=VARCHAR},
+            #{city, jdbcType=VARCHAR},
+            #{industry, jdbcType=VARCHAR},
+            #{postType, jdbcType=TINYINT},
+            #{skill, jdbcType=VARCHAR},
+            #{salary, jdbcType=VARCHAR},
+            #{education, jdbcType=VARCHAR},
+            #{nature, jdbcType=VARCHAR},
+            #{scale, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="deleteById" parameterType="java.lang.Long">
+        UPDATE post
+        SET deleted = 1
+        WHERE postId = #{postId, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="seu.talents.cloud.talent.model.dao.entity.Post">
+        UPDATE post
+        SET
+            postName = #{postName, jdbcType=VARCHAR},
+            detailLink = #{detailLink, jdbcType=VARCHAR},
+            companyName = #{companyName, jdbcType=VARCHAR},
+            companyLink = #{companyLink, jdbcType=VARCHAR},
+            city = #{city, jdbcType=VARCHAR},
+            industry = #{industry, jdbcType=VARCHAR},
+            postType = #{postType, jdbcType=TINYINT},
+            skill = #{skill, jdbcType=VARCHAR},
+            salary = #{salary, jdbcType=VARCHAR},
+            education = #{education, jdbcType=VARCHAR},
+            nature = #{nature, jdbcType=VARCHAR},
+            scale = #{scale, jdbcType=VARCHAR}
+        WHERE postId = #{postId, jdbcType=BIGINT}
+    </update>
 
     <select id="searchPost" resultType="seu.talents.cloud.talent.model.dao.entity.Post">
         SELECT postName, detailLink, companyName, companyLink, city, industry, time
@@ -13,8 +83,8 @@
         WHERE deleted = 0 AND postType = #{postType}
         <if test="keyWord != null">
             AND (
-                postName LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
-                OR companyName LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
+            postName LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
+            OR companyName LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
             )
         </if>
         <if test="industry != null">

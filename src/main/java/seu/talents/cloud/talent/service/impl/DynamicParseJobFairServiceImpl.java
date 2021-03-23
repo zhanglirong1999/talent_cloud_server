@@ -19,8 +19,6 @@ import seu.talents.cloud.talent.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service("dynamicParseJobFairService")
 public class DynamicParseJobFairServiceImpl implements JobFairService {
@@ -91,5 +89,17 @@ public class DynamicParseJobFairServiceImpl implements JobFairService {
                 jobFairSearchDTO.getTime(),
                 jobFairSearchDTO.getPageIndex()
         );
+    }
+
+    @Override
+    public void addJobFair(JobFair jobFair) {
+    }
+
+    @Override
+    public void deleteById(Long jobFairId) {
+    }
+
+    @Override
+    public void updateById(JobFair jobFair) {
     }
 }

@@ -39,4 +39,19 @@ public class DatabaseSelectedGraduatesAndInternationalOrganizationImpl
                 type
         );
     }
+
+    @Override
+    public void add(SelectedGraduatesOrInternationalOrganization selectedGraduatesOrInternationalOrganization) {
+        selectedGraduatesOrInternationalOrganizationMapper.add(selectedGraduatesOrInternationalOrganization);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        selectedGraduatesOrInternationalOrganizationMapper.deleteById(id);
+    }
+
+    @Override
+    public void updateById(SelectedGraduatesOrInternationalOrganization selectedGraduatesOrInternationalOrganization) {
+        selectedGraduatesOrInternationalOrganizationMapper.updateById(selectedGraduatesOrInternationalOrganization);
+    }
 }

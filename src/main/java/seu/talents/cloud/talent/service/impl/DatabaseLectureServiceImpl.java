@@ -32,4 +32,19 @@ public class DatabaseLectureServiceImpl implements LectureService {
         PageHelper.startPage(lectureSearchDTO.getPageIndex(), CONST.PAGE_SIZE);
         return lectureMapper.searchLecture(lectureSearchDTO.getKeyWord(), lectureSearchDTO.getTime());
     }
+
+    @Override
+    public void addLecture(Lecture lecture) {
+        lectureMapper.add(lecture);
+    }
+
+    @Override
+    public void deleteById(Long lectureId) {
+        lectureMapper.deleteById(lectureId);
+    }
+
+    @Override
+    public void updateById(Lecture lecture) {
+        lectureMapper.updateById(lecture);
+    }
 }

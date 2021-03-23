@@ -37,4 +37,19 @@ public class DatabaseRecruitmentServiceImpl implements RecruitmentService {
                 recruitmentSearchDTO.getTime()
         );
     }
+
+    @Override
+    public void addRecruitment(Recruitment recruitment) {
+        recruitmentMapper.add(recruitment);
+    }
+
+    @Override
+    public void deleteById(Long recruitmentId) {
+        recruitmentMapper.deleteById(recruitmentId);
+    }
+
+    @Override
+    public void updateById(Recruitment recruitment) {
+        recruitmentMapper.updateById(recruitment);
+    }
 }

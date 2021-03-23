@@ -8,4 +8,7 @@ import java.util.List;
 public interface LectureService {
     List<Lecture> getLectureByPage(Integer pageIndex, Integer pageSize);
     List<Lecture> searchLecture(LectureSearchDTO lectureSearchDTO);
+    void addLecture(Lecture lecture);
+    void deleteById(Long lectureId);
+    void updateById(Lecture lecture);
 }

@@ -1,6 +1,5 @@
 package seu.talents.cloud.talent.model.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +10,8 @@ import javax.persistence.Column;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {
-    @JsonIgnore
     Long postId;
+    Integer postType;
     String postName;
     String detailLink;
     String companyName;
@@ -21,16 +20,9 @@ public class Post {
     String industry;
     @Column(name = "time")
     String time;
-    @JsonIgnore
-    Integer deleted;
-    @JsonIgnore
     String skill;
-    @JsonIgnore
     String salary;
-    @JsonIgnore
     String education;
-    @JsonIgnore
     String nature;
-    @JsonIgnore
     String scale;
 }

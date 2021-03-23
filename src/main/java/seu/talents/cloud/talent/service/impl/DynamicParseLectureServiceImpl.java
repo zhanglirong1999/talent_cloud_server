@@ -88,4 +88,19 @@ public class DynamicParseLectureServiceImpl implements LectureService {
                 lectureSearchDTO.getPageIndex()
         );
     }
+
+    @Override
+    public void addLecture(Lecture lecture) {
+
+    }
+
+    @Override
+    public void deleteById(Long lectureId) {
+
+    }
+
+    @Override
+    public void updateById(Lecture lecture) {
+
+    }
 }

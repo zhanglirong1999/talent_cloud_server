@@ -39,4 +39,19 @@ public class DatabaseJobFairServiceImpl implements JobFairService {
                 jobFairSearchDTO.getTime()
         );
     }
+
+    @Override
+    public void addJobFair(JobFair jobFair) {
+        jobFairMapper.add(jobFair);
+    }
+
+    @Override
+    public void deleteById(Long jobFairId) {
+        jobFairMapper.deleteById(jobFairId);
+    }
+
+    @Override
+    public void updateById(JobFair jobFair) {
+        jobFairMapper.updateById(jobFair);
+    }
 }

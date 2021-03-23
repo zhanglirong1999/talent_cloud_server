@@ -8,4 +8,7 @@ import java.util.List;
 public interface PostService {
     List<Post> getPostInformationByPage(Integer pageIndex, Integer pageSize, Integer postType);
     List<Post> searchPost(PostSearchDTO postSearchDTO);
+    void addPost(Post post);
+    void deleteById(Long postId);
+    void updateById(Post post);
 }

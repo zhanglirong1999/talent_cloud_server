@@ -9,4 +9,7 @@ import java.util.List;
 public interface SelectedGraduatesOrInternationalOrganizationMapper {
     List<SelectedGraduatesOrInternationalOrganization> getAll(Integer type);
     List<SelectedGraduatesOrInternationalOrganization> search(String keyWord, Integer type);
+    void add(SelectedGraduatesOrInternationalOrganization selectedGraduatesOrInternationalOrganization);
+    void deleteById(Long id);
+    void updateById(SelectedGraduatesOrInternationalOrganization selectedGraduatesOrInternationalOrganization);
 }

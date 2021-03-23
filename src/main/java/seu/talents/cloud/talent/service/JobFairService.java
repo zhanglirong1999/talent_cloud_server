@@ -8,4 +8,7 @@ import java.util.List;
 public interface JobFairService {
     List<JobFair> getJobFairsByPage(Integer pageIndex, Integer pageSize);
     List<JobFair> searchJobFairs(JobFairSearchDTO jobFairSearchDTO);
+    void addJobFair(JobFair jobFair);
+    void deleteById(Long jobFairId);
+    void updateById(JobFair jobFair);
 }

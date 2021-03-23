@@ -87,4 +87,16 @@ public class DynamicParseRecruitmentServiceImpl implements RecruitmentService {
                 recruitmentSearchDTO.getPageIndex()
         );
     }
+
+    @Override
+    public void addRecruitment(Recruitment recruitment) {
+    }
+
+    @Override
+    public void deleteById(Long recruitmentId) {
+    }
+
+    @Override
+    public void updateById(Recruitment recruitment) {
+    }
 }

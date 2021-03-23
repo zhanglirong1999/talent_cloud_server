@@ -21,4 +21,7 @@ public interface PostMapper extends Mapper<Post> {
             String nature,
             String scale
     );
+    void add(Post post);
+    void deleteById(Long postId);
+    void updateById(Post post);
 }

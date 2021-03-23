@@ -1,21 +1,26 @@
 package seu.talents.cloud.talent.model.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobFair {
-    @JsonIgnore
     Long jobFairId;
     String jobFairName;
     String city;
     String address;
     String type;
     String time;
+    @Column(name = "startTime")
+    String startTime;
+    @Column(name = "endTime")
+    String endTime;
+    String publishRange;
     String detailLink;
 }

@@ -2,10 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seu.talents.cloud.talent.model.dao.mapper.LectureMapper">
     <select id="getAll" resultType="seu.talents.cloud.talent.model.dao.entity.Lecture">
-        SELECT lectureName, detailLink, city, school, address, CONCAT(CONCAT(DATE_FORMAT(startTime, '%Y-%m-%d %H:%i'), ' - '), DATE_FORMAT(endTime, '%Y-%m-%d %H:%i')) AS time
+        SELECT lectureId, lectureName, detailLink, city, school, address, startTime, endTime
         FROM lecture
         WHERE deleted = 0
     </select>
+
+    <insert id="add" parameterType="seu.talents.cloud.talent.model.dao.entity.Lecture">
+        INSERT INTO lecture (
+            lectureId,
+            lectureName,
+            detailLink,
+            city,
+            school,
+            address,
+            startTime,
+            endTime
+        ) VALUES (
+            #{lectureId, jdbcType=BIGINT},
+            #{lectureName, jdbcType=VARCHAR},
+            #{detailLink, jdbcType=VARCHAR},
+            #{city, jdbcType=VARCHAR},
+            #{school, jdbcType=VARCHAR},
+            #{address, jdbcType=VARCHAR},
+            #{startTime, jdbcType=TIMESTAMP},
+            #{endTime, jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <update id="deleteById" parameterType="java.lang.Long">
+        UPDATE lecture
+        SET deleted = 1
+        WHERE lectureId = #{lectrueId, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="seu.talents.cloud.talent.model.dao.entity.Lecture">
+        UPDATE lecture
+        SET
+            lectureName = #{lectureName, jdbcType=VARCHAR},
+            detailLink = #{detailLink, jdbcType=VARCHAR},
+            city = #{city, jdbcType=VARCHAR},
+            school = #{school, jdbcType=VARCHAR},
+            address = #{address, jdbcType=VARCHAR},
+            startTime = #{startTime, jdbcType=TIMESTAMP},
+            endTime = #{endTime, jdbcType=TIMESTAMP}
+        WHERE lectureId = #{lectureId, jdbcType=BIGINT}
+    </update>
+
 
     <select id="searchLecture" resultType="seu.talents.cloud.talent.model.dao.entity.Lecture">
         SELECT lectureName, detailLink, city, school, address, CONCAT(CONCAT(DATE_FORMAT(startTime, '%Y-%m-%d %H:%i'), ' - '), DATE_FORMAT(endTime, '%Y-%m-%d %H:%i')) AS time
