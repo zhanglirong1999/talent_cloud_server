@@ -25,4 +25,5 @@ public class Post {
     String education;
     String nature;
     String scale;
+    String source;
 }

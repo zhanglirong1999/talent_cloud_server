@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seu.talents.cloud.talent.model.dao.mapper.RecruitmentMapper">
     <select id="getAll" resultType="seu.talents.cloud.talent.model.dao.entity.Recruitment">
-        SELECT recruitmentId, recruitmentName, detailLink, city, time, publishRange
+        SELECT recruitmentId, recruitmentName, detailLink, city, time, publishRange, source
         FROM recruitment
         WHERE deleted = 0
     </select>
@@ -13,13 +13,15 @@
             recruitmentName,
             detailLink,
             city,
-            publishRange
+            publishRange,
+            source
         ) VALUES (
             #{recruitmentId, jdbcType=BIGINT},
             #{recruitmentName, jdbcType=VARCHAR},
             #{detailLink, jdbcType=VARCHAR},
             #{city, jdbcType=VARCHAR},
-            #{publishRange, jdbcType=VARCHAR}
+            #{publishRange, jdbcType=VARCHAR},
+            #{source, jdbcType=VARCHAR}
         )
     </insert>
 
@@ -35,13 +37,14 @@
             recruitmentName = #{recruitmentName, jdbcType=VARCHAR},
             detailLink = #{detailLink, jdbcType=VARCHAR},
             city = #{city, jdbcType=VARCHAR},
-            publishRange = #{publishRange, jdbcType=VARCHAR}
+            publishRange = #{publishRange, jdbcType=VARCHAR},
+            source = #{source, jdbcType=VARCHAR}
         WHERE recruitmentId = #{recruitmentId, jdbcType=BIGINT}
     </update>
 
 
     <select id="searchRecruitment" resultType="seu.talents.cloud.talent.model.dao.entity.Recruitment">
-        SELECT recruitmentName, detailLink, city, time
+        SELECT recruitmentName, detailLink, city, time, source
         FROM recruitment
         WHERE deleted = 0
         <if test="keyWord != null">

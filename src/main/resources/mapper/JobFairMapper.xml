@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seu.talents.cloud.talent.model.dao.mapper.JobFairMapper">
     <select id="getAll" resultType="seu.talents.cloud.talent.model.dao.entity.JobFair">
-        SELECT jobFairId, jobFairName, detailLink, city, address, type, startTime, endTime, publishRange
+        SELECT jobFairId, jobFairName, detailLink, city, address, type, startTime, endTime, publishRange, source
         FROM job_fair
         WHERE deleted = 0
     </select>
@@ -17,7 +17,8 @@
             startTime,
             endTime,
             publishRange,
-            detailLink
+            detailLink,
+            source
         ) VALUES (
             #{jobFairId, jdbcType=BIGINT},
             #{jobFairName, jdbcType=VARCHAR},
@@ -27,7 +28,8 @@
             #{startTime, jdbcType=TIMESTAMP},
             #{endTime, jdbcType=TIMESTAMP},
             #{publishRange, jdbcType=VARCHAR},
-            #{detailLink, jdbcType=VARCHAR}
+            #{detailLink, jdbcType=VARCHAR},
+            #{source, jdbcType=VARCHAR}
         )
     </insert>
 
@@ -46,12 +48,13 @@
             startTime = #{startTime, jdbcType=TIMESTAMP},
             endTime = #{endTime, jdbcType=TIMESTAMP},
             publishRange = #{publishRange, jdbcType=VARCHAR},
-            detailLink = #{detailLink, jdbcType=VARCHAR}
+            detailLink = #{detailLink, jdbcType=VARCHAR},
+            source = #{source, jdbcType=VARCHAR}
         WHERE jobFairId = #{jobFairId, jdbcType=BIGINT}
     </update>
 
     <select id="searchJobFair" resultType="seu.talents.cloud.talent.model.dao.entity.JobFair">
-        SELECT jobFairName, detailLink, city, address, type, CONCAT(CONCAT(DATE_FORMAT(startTime, '%Y-%m-%d %H:%i'), ' - '), DATE_FORMAT(endTime, '%Y-%m-%d %H:%i')) AS time
+        SELECT jobFairName, detailLink, city, address, type, CONCAT(CONCAT(DATE_FORMAT(startTime, '%Y-%m-%d %H:%i'), ' - '), DATE_FORMAT(endTime, '%Y-%m-%d %H:%i')) AS time, source
         FROM job_fair
         WHERE deleted = 0
         <if test="keyWord != null">

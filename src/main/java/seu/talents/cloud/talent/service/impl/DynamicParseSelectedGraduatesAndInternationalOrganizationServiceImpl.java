@@ -73,7 +73,7 @@ public class DynamicParseSelectedGraduatesAndInternationalOrganizationServiceImp
             temp.setTime(information.child(0).text());
             temp.setName(name);
             temp.setDetailLink(link);
-
+            temp.setSource(httpRequestConstValue.getSource());
             resultList.add(temp);
         }
         return resultList;

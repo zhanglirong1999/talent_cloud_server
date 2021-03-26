@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seu.talents.cloud.talent.model.dao.mapper.SelectedGraduatesOrInternationalOrganizationMapper">
     <select id="getAll" resultType="seu.talents.cloud.talent.model.dao.entity.SelectedGraduatesOrInternationalOrganization">
-        SELECT id, name, detailLink, time, type
+        SELECT id, name, detailLink, time, type, source
         FROM selected_graduates_and_international_organization
         WHERE deleted = 0 AND type = #{type}
     </select>
@@ -12,12 +12,14 @@
             id,
             name,
             detailLink,
-            type
+            type,
+            source
         ) VALUES (
             #{id, jdbcType=BIGINT},
             #{name, jdbcType=VARCHAR},
             #{detailLink, jdbcType=VARCHAR},
-            #{type, jdbcType=TINYINT}
+            #{type, jdbcType=TINYINT},
+            #{source, jdbcType=VARCHAR}
         )
     </insert>
 
@@ -31,12 +33,13 @@
         UPDATE selected_graduates_and_international_organization
         SET
             name = #{name, jdbcType=VARCHAR},
-            detailLink = #{detailLink, jdbcType=VARCHAR}
+            detailLink = #{detailLink, jdbcType=VARCHAR},
+            source = #{source, jdbcType=VARCHAR}
         WHERE id = #{id, jdbcType=BIGINT}
     </update>
 
     <select id="search" resultType="seu.talents.cloud.talent.model.dao.entity.SelectedGraduatesOrInternationalOrganization">
-        SELECT name, detailLink, time
+        SELECT name, detailLink, time, source
         FROM selected_graduates_and_international_organization
         WHERE deleted = 0 AND type = #{type}
         <if test="keyWord != null">

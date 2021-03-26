@@ -65,6 +65,7 @@ public class DynamicParseJobFairServiceImpl implements JobFairService {
             tempJobFair.setAddress(information.child(2).text());
             tempJobFair.setType(information.child(3).text());
             tempJobFair.setTime(information.child(4).text());
+            tempJobFair.setSource(httpRequestConstValue.getSource());
             resultList.add(tempJobFair);
         }
 

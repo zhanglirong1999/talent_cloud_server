@@ -62,7 +62,7 @@ public class DynamicParseRecruitmentServiceImpl implements RecruitmentService {
             tempRecruitment.setDetailLink(link);
             tempRecruitment.setCity(information.child(1).text());
             tempRecruitment.setTime(information.child(2).text());
-
+            tempRecruitment.setSource(httpRequestConstValue.getSource());
             resultList.add(tempRecruitment);
         }
 

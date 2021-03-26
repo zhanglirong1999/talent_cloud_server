@@ -23,4 +23,5 @@ public class JobFair {
     String endTime;
     String publishRange;
     String detailLink;
+    String source;
 }

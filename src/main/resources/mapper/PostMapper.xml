@@ -16,7 +16,8 @@
                salary,
                education,
                nature,
-               scale
+               scale,
+               source
         FROM post
         WHERE deleted = 0 AND postType = #{postType}
     </select>
@@ -35,7 +36,8 @@
             salary,
             education,
             nature,
-            scale
+            scale,
+            source
         ) VALUES (
             #{postId, jdbcType=BIGINT},
             #{postName, jdbcType=VARCHAR},
@@ -49,7 +51,8 @@
             #{salary, jdbcType=VARCHAR},
             #{education, jdbcType=VARCHAR},
             #{nature, jdbcType=VARCHAR},
-            #{scale, jdbcType=VARCHAR}
+            #{scale, jdbcType=VARCHAR},
+            #{source, jdbcType=VARCHAR}
         )
     </insert>
 
@@ -73,12 +76,13 @@
             salary = #{salary, jdbcType=VARCHAR},
             education = #{education, jdbcType=VARCHAR},
             nature = #{nature, jdbcType=VARCHAR},
-            scale = #{scale, jdbcType=VARCHAR}
+            scale = #{scale, jdbcType=VARCHAR},
+            source = #{source, jdbcType=VARCHAR}
         WHERE postId = #{postId, jdbcType=BIGINT}
     </update>
 
     <select id="searchPost" resultType="seu.talents.cloud.talent.model.dao.entity.Post">
-        SELECT postName, detailLink, companyName, companyLink, city, industry, time
+        SELECT postName, detailLink, companyName, companyLink, city, industry, time, source
         FROM post
         WHERE deleted = 0 AND postType = #{postType}
         <if test="keyWord != null">

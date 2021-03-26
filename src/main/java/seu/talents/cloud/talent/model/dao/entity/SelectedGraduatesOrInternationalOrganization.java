@@ -16,4 +16,5 @@ public class SelectedGraduatesOrInternationalOrganization {
     @Column(name = "time")
     String time;
     Integer type;
+    String source;
 }

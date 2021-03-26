@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seu.talents.cloud.talent.model.dao.mapper.LectureMapper">
     <select id="getAll" resultType="seu.talents.cloud.talent.model.dao.entity.Lecture">
-        SELECT lectureId, lectureName, detailLink, city, school, address, startTime, endTime
+        SELECT lectureId, lectureName, detailLink, city, school, address, startTime, endTime, source
         FROM lecture
         WHERE deleted = 0
     </select>
@@ -16,7 +16,8 @@
             school,
             address,
             startTime,
-            endTime
+            endTime,
+            source
         ) VALUES (
             #{lectureId, jdbcType=BIGINT},
             #{lectureName, jdbcType=VARCHAR},
@@ -25,7 +26,8 @@
             #{school, jdbcType=VARCHAR},
             #{address, jdbcType=VARCHAR},
             #{startTime, jdbcType=TIMESTAMP},
-            #{endTime, jdbcType=TIMESTAMP}
+            #{endTime, jdbcType=TIMESTAMP},
+            #{source, jdbcType=VARCHAR}
         )
     </insert>
 
@@ -44,13 +46,14 @@
             school = #{school, jdbcType=VARCHAR},
             address = #{address, jdbcType=VARCHAR},
             startTime = #{startTime, jdbcType=TIMESTAMP},
-            endTime = #{endTime, jdbcType=TIMESTAMP}
+            endTime = #{endTime, jdbcType=TIMESTAMP},
+            source = #{source, jdbcType=VARCHAR}
         WHERE lectureId = #{lectureId, jdbcType=BIGINT}
     </update>
 
 
     <select id="searchLecture" resultType="seu.talents.cloud.talent.model.dao.entity.Lecture">
-        SELECT lectureName, detailLink, city, school, address, CONCAT(CONCAT(DATE_FORMAT(startTime, '%Y-%m-%d %H:%i'), ' - '), DATE_FORMAT(endTime, '%Y-%m-%d %H:%i')) AS time
+        SELECT lectureName, detailLink, city, school, address, CONCAT(CONCAT(DATE_FORMAT(startTime, '%Y-%m-%d %H:%i'), ' - '), DATE_FORMAT(endTime, '%Y-%m-%d %H:%i')) AS time, source
         FROM lecture
         WHERE deleted = 0
         <if test="keyWord != null">

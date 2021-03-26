@@ -28,4 +28,5 @@ public class HttpRequestConstValue {
     private String internationalOrganizationUrlTemplateForGet;
     private String internationalOrganizationUrlTemplateForSearch;
     private String urlPrefix;
+    private String source;
 }

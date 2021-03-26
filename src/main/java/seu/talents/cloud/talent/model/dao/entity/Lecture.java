@@ -21,4 +21,5 @@ public class Lecture {
     @Column(name = "endTime")
     String endTime;
     String time;
+    String source;
 }

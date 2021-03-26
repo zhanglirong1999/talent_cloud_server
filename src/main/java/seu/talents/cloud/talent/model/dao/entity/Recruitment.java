@@ -17,4 +17,5 @@ public class Recruitment {
     @Column(name = "time")
     String time;
     String publishRange;
+    String source;
 }

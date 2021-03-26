@@ -65,6 +65,7 @@ public class DynamicParseLectureServiceImpl implements LectureService {
             tempLecture.setSchool(information.child(2).text());
             tempLecture.setAddress(information.child(3).text());
             tempLecture.setTime(information.child(4).text());
+            tempLecture.setSource(httpRequestConstValue.getSource());
             resultList.add(tempLecture);
         }
 

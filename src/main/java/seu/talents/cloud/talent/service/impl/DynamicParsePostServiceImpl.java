@@ -71,6 +71,7 @@ public class DynamicParsePostServiceImpl implements PostService {
             tempPost.setCity(information.child(2).text());
             tempPost.setIndustry(information.child(3).text());
             tempPost.setTime(information.child(4).text());
+            tempPost.setSource(httpRequestConstValue.getSource());
             resultList.add(tempPost);
         }
 
