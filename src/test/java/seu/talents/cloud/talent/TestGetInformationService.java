@@ -13,7 +13,7 @@ import java.util.List;
 @SpringBootTest
 public class TestGetInformationService {
 
-    @Qualifier("dynamicParseJobFairServiceImpl")
+    @Qualifier("dynamicParseJobFairService")
     @Autowired
     private JobFairService dynamicParseJobFairService;
 
