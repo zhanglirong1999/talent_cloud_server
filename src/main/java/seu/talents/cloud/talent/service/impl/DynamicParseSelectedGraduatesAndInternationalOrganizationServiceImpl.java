@@ -63,7 +63,7 @@ public class DynamicParseSelectedGraduatesAndInternationalOrganizationServiceImp
         Elements informationList = newsBox.select("ul.newsList");
         for (Element information: informationList) {
             SelectedGraduatesOrInternationalOrganization temp = new SelectedGraduatesOrInternationalOrganization();
-            Element title = information.child(1).child(0);
+            Element title = information.child(1).selectFirst("a");
             String name = title.text();
             String link = title.attr("href");
 
