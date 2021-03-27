@@ -78,7 +78,6 @@ public class DynamicParseJobFairServiceImpl implements JobFairService {
     }
 
     @Override
-    @ConvertParameters
     public List<JobFair> searchJobFairs(JobFairSearchDTO jobFairSearchDTO) {
         return requestAndParseHtml(
                 jobFairSearchDTO.getPageIndex(),
