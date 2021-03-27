@@ -12,6 +12,6 @@ public class TokenInterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TokenInterceptor())
-                .addPathPatterns("/**");
+                .addPathPatterns("/**").excludePathPatterns("/static/**");
     }
 }
