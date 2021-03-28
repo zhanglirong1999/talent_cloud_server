@@ -143,11 +143,14 @@ public class RecommendServiceImpl implements RecommendService {
         map.put("takeCount",company.getTakeCount());
         map.put("passRate",company.getPassRate());
         map.put("logo",company.getLogo());
-        map.put("city",company.getCity());
+        map.put("companyCity",company.getCity());
         Account account = accountMapper.getAccount(recommend.getAid());
         map.put("gradYear",account.getGradYear());
         map.put("college",account.getCollage());
         map.put("accountCompany",account.getCompany());
+        map.put("avatar",account.getAvatar());
+        map.put("experience",0);
+        map.put("recommendCount",recommendMapper.getCompanyName(recommend.getCompany()));
 
         return map;
     }

@@ -23,5 +23,8 @@ public interface RecommendMapper extends Mapper<Recommend> {
     @Select("SELECT * FROM recommend WHERE name like '%${keyword}%' ORDER BY createTime DESC LIMIT ${pageIndex},20")
     List<Recommend> getRecommendSearch(String keyword,Integer pageIndex);
 
+    @Select("Select count(*) from recommend where name='${name}'")
+    Integer getCompanyName(String name);
+
 
 }
