@@ -9,13 +9,15 @@ import javax.persistence.Column;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class job {
+public class Job {
     String accountId;
-    String job;
+    @Column(name ="jobId")
+    Long jobId;
     String company;
     @Column(name = "startTime")
     String startTime;
     @Column(name = "endTime")
     String endTime;
     Integer deleted;
+    String position;
 }

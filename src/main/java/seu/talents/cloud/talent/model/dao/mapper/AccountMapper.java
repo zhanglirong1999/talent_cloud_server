@@ -25,4 +25,7 @@ public interface AccountMapper extends Mapper<Account> {
     @Select("SELECT * FROM account WHERE name='${name}' and password='${password}'")
     Account getAdmin(String name,String password);
 
+    @Select("Select * from account where accountId='${aid}'")
+    Account getAccount(String aid);
+
 }
