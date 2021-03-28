@@ -11,14 +11,12 @@ import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.common.annotation.TokenRequired;
 import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.exception.BizException;
+import seu.talents.cloud.talent.model.dao.entity.Favorite;
 import seu.talents.cloud.talent.model.dao.entity.Friend;
 import seu.talents.cloud.talent.model.dao.entity.Job;
 import seu.talents.cloud.talent.model.dao.mapper.*;
 import seu.talents.cloud.talent.model.dto.PageResult;
-import seu.talents.cloud.talent.model.dto.post.AlumniCircleBasicInfoDTO;
-import seu.talents.cloud.talent.model.dto.post.FriendStatus;
-import seu.talents.cloud.talent.model.dto.post.MessageType;
-import seu.talents.cloud.talent.model.dto.post.SearchType;
+import seu.talents.cloud.talent.model.dto.post.*;
 import seu.talents.cloud.talent.model.dto.returnDTO.JobDTO;
 import seu.talents.cloud.talent.service.MessageService;
 import seu.talents.cloud.talent.service.QCloudFileManager;
@@ -159,6 +157,7 @@ public class CommonController {
     @Autowired
     private SubscribeMessageService subscribeMessageService;
 
+  //  @TokenRequired
     @PostMapping("/friend/manage")
     @Transactional
     public Object friendAction(@RequestBody Map<String, String> req) {
@@ -235,6 +234,92 @@ public class CommonController {
 
         return "success";
     }
+
+   // @TokenRequired
+    @PostMapping("/friend/apply")
+    @Transactional
+    public Object friendApply(@RequestBody FriendApplyDTO friendApplyDTO) {
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        Friend f = new Friend();
+        f.setAccountId(accountId);
+        f.setFriendAccountId(friendApplyDTO.getFriendAccountId());
+
+
+        Friend fRes = friendMapper.selectOne(f);
+        if (fRes != null && fRes.getStatus() == FriendStatus.apply.getStatus()) {
+            throw new BizException(ConstantUtil.BizExceptionCause.TWICE_APPLY);
+        }
+
+        Friend A2B = new Friend();
+        A2B.setAccountId(accountId);
+        A2B.setFriendAccountId(friendApplyDTO.getFriendAccountId());
+        A2B.setStatus(FriendStatus.apply.getStatus());
+
+        friendMapper.insertOnDuplicateKeyUpdate(A2B.getAccountId(),A2B.getFriendAccountId(),A2B.getStatus());
+
+        Friend B2A = new Friend();
+        B2A.setAccountId(friendApplyDTO.getFriendAccountId());
+        B2A.setFriendAccountId(accountId);
+        B2A.setStatus(FriendStatus.todo.getStatus());
+        friendMapper.insertOnDuplicateKeyUpdate(A2B.getAccountId(),A2B.getFriendAccountId(),A2B.getStatus());
+
+        //发消息
+        messageService.newMessage(accountId, friendApplyDTO.getFriendAccountId(),
+                MessageType.APPLY.getValue(),"", friendApplyDTO.getMessage());
+
+        //发送推送
+        subscribeMessageService.sendSubscribeMessage(friendApplyDTO.getFriendAccountId(),accountId,CONST.NEW_FRIEND_MESSAGE);
+        return "success";
+    }
+
+    @Autowired
+    FavoriteMapper favoriteMapper;
+
+   // @RegistrationRequired
+//    @TokenRequired
+    @PostMapping("/favorite")
+    public Object changeFavoriteStatus(@RequestBody Map req) {
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        String favoriteAccountId = (String) req.get("favoriteAccountId");
+        Integer status = (Integer) req.get("status");
+
+        if (status != 0 && status != 1) {
+            throw new BizException(ConstantUtil.BizExceptionCause.FILE_STATUS);
+        }
+        Favorite favorite = new Favorite();
+        favorite.setAccountId(accountId);
+        favorite.setFavoriteAccountId(favoriteAccountId);
+        if (favoriteMapper.select(favorite).size() == 0) {
+            favorite.setStatus(status);
+            favoriteMapper.insertSelective(favorite);
+        } else {
+            favorite.setStatus(status);
+            Example example = new Example(Favorite.class);
+            Example.Criteria criteria = example.createCriteria();
+            criteria.andEqualTo("accountId", accountId);
+            criteria.andEqualTo("favoriteAccountId", favoriteAccountId);
+
+            favoriteMapper.updateByExampleSelective(favorite, example);
+        }
+        return "success";
+    }
+
+    @GetMapping("/test")
+    public Object test(){
+        String accountId = "3d008aa1-681e-4100-9aaa-9cce15ac2bec";
+        String favoriteAccountId = "a71067ee-b9f0-4d18-a2d0-f322fe48b575";
+        Example example = new Example(Favorite.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("accountId", accountId);
+        criteria.andEqualTo("favoriteAccountId", favoriteAccountId);
+        Favorite favorite = new Favorite();
+        favorite.setAccountId(accountId);
+        favorite.setFavoriteAccountId(favoriteAccountId);
+        favorite.setStatus(1);
+        favoriteMapper.updateByExampleSelective(favorite, example);
+        return 1;
+    }
+
 
 
 }

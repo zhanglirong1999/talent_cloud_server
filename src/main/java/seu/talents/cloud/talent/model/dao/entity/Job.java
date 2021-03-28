@@ -15,9 +15,9 @@ public class Job {
     Long jobId;
     String company;
     @Column(name = "startTime")
-    String startTime;
+    Long startTime;
     @Column(name = "endTime")
-    String endTime;
+    Long endTime;
     Integer deleted;
     String position;
 }
