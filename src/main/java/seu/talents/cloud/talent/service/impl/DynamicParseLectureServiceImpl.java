@@ -79,7 +79,6 @@ public class DynamicParseLectureServiceImpl implements LectureService {
     }
 
     @Override
-    @ConvertParameters
     public List<Lecture> searchLecture(LectureSearchDTO lectureSearchDTO) {
         return requestAndParseHtml(
                 lectureSearchDTO.getPageIndex(),

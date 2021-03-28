@@ -75,7 +75,6 @@ public class DynamicParseRecruitmentServiceImpl implements RecruitmentService {
     }
 
     @Override
-    @ConvertParameters
     public List<Recruitment> searchRecruitment(RecruitmentSearchDTO recruitmentSearchDTO) {
         return requestAndParseHtml(
                 recruitmentSearchDTO.getPageIndex(),

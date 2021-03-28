@@ -88,7 +88,6 @@ public class DynamicParsePostServiceImpl implements PostService {
     }
 
     @Override
-    @ConvertParameters
     public List<Post> searchPost(PostSearchDTO postSearchDTO) {
         return requestAndParseHtml(
                 postSearchDTO.getPageIndex(),
