@@ -60,23 +60,16 @@
             AND lectureName LIKE CONCAT(CONCAT('%', #{keyWord}), '%')
         </if>
         <if test="time != null">
-            <if test='time == "今天"'>
-                AND TO_DAYS(startTime) = TO_DAYS(NOW())
-            </if>
-            <if test='time == "近三天"'>
-                AND DATE_ADD(CURDATE(), INTERVAL 3 DAY) &gt;= DATE(startTime) AND DATE(startTime) &gt;= CURDATE()
-            </if>
-            <if test='time == "近一周"'>
-                AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) &gt;= DATE(startTime) AND DATE(startTime) &gt;= CURDATE()
-            </if>
-            <if test='time == "近两周"'>
-                AND DATE_ADD(CURDATE(), INTERVAL 14 DAY) &gt;= DATE(startTime) AND DATE(startTime) &gt;= CURDATE()
-            </if>
-            <if test='time == "近一月"'>
-                AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(startTime) AND DATE(startTime) &lt;= DATE_ADD(CURDATE(), INTERVAL 23 DAY)
-            </if>
-            <if test='time == "近两月"'>
-                AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(startTime) AND DATE(startTime) &lt;=DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+            <if test='time != "1"'>
+                <if test='time == "7"'>
+                    AND DATE_ADD(CURDATE(), INTERVAL 7 DAY) &gt;= DATE(startTime) AND DATE(startTime) &gt;= CURDATE()
+                </if>
+                <if test='time == "30"'>
+                    AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(startTime) AND DATE(startTime) &lt;= DATE_ADD(CURDATE(), INTERVAL 23 DAY)
+                </if>
+                <if test='time == "365"'>
+                    AND DATE_SUB(CURDATE(), INTERVAL 305 DAY) &lt;= DATE(startTime) AND DATE(startTime) &lt;=DATE_ADD(CURDATE(), INTERVAL 60 DAY)
+                </if>
             </if>
         </if>
     </select>
