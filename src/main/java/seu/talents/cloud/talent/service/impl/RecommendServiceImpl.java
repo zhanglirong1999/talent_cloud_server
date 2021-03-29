@@ -2,6 +2,7 @@ package seu.talents.cloud.talent.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import seu.talents.cloud.talent.model.dao.entity.Account;
 import seu.talents.cloud.talent.model.dao.entity.Company;
 import seu.talents.cloud.talent.model.dao.entity.Recommend;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
@@ -141,6 +142,16 @@ public class RecommendServiceImpl implements RecommendService {
         map.put("count",company.getCount());
         map.put("takeCount",company.getTakeCount());
         map.put("passRate",company.getPassRate());
+        map.put("logo",company.getLogo());
+        map.put("companyCity",company.getCity());
+        Account account = accountMapper.getAccount(recommend.getAid());
+        map.put("gradYear",account.getGradYear());
+        map.put("college",account.getCollage());
+        map.put("accountCompany",account.getCompany());
+        map.put("avatar",account.getAvatar());
+        map.put("experience",0);
+        map.put("recommendCount",recommendMapper.getCompanyName(recommend.getCompany()));
+
         return map;
     }
 

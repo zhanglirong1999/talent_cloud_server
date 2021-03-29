@@ -29,7 +29,11 @@ public class ConstantUtil {
         HAS_DELETE(9,"此公司已经注销"),
         ERROR_ADMIN(10,"管理员用户名或密码错误"),
         HAVE_EXSIT(11,"此公司已存在"),
-        REQUEST_HAS_BEEN_REFUSED(12, "请求就业办网页页面信息失败")
+        REQUEST_HAS_BEEN_REFUSED(12, "请求就业办网页页面信息失败"),
+        FAIL_PICTURE(13,"文字或图片含有敏感信息"),
+        FAIL_FRIEND(14,"处理人id A,B 不能为null"),
+        TWICE_APPLY(15,"请勿重复申请"),
+        FILE_STATUS(16,"status只能为0或1")
 
 
 

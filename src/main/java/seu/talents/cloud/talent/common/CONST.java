@@ -1,5 +1,7 @@
 package seu.talents.cloud.talent.common;
 
+import seu.talents.cloud.talent.common.config.AccessTokenConfig;
+
 public class CONST {
     public static final int SUCCESS_CODE = 200;
     public static final int FAIL_CODE = -1;
@@ -24,6 +26,24 @@ public class CONST {
     public static final String ACL_ACCOUNTID = "accountId";
     public static final String SCHOOL_ID ="schoolId";
 
+    /**
+     * 同意1，拒绝0
+     */
+    public static final int FRIEND_ACTION_Y = 1;
+    public static final int FRIEND_ACTION_N = 0;
+
+    /**
+     * 订阅消息提示类型
+     */
+    public static final String  ACTIVITY_MESSAGE = "活动消息";
+    public static final String  SYSTEM_MESSAGE = "系统消息";
+    public static final String  NEW_FRIEND_MESSAGE = "有新朋友请求交换名片";
+    public static final String  REJECT_MESSAGE = "拒绝添加朋友";
+    public static final String  AGREE_MESSAGE = "同意添加朋友";
+
+    public static String getAccessToken() {
+        return AccessTokenConfig.getAccessToken();
+    }
 
     public static final String fail() {
         return "<xml>\n" +
