@@ -107,24 +107,17 @@
             AND education = #{education}
         </if>
         <if test="time != null">
-            <if test='time == "今天"'>
-                AND TO_DAYS(time) = TO_DAYS(NOW())
-            </if>
-            <if test='time == "近三天"'>
-                AND DATE_SUB(CURDATE(), INTERVAL 3 DAY) &lt;= DATE(time)
-            </if>
-            <if test='time == "近一周"'>
-                AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(time)
-            </if>
-            <if test='time == "近两周"'>
-                AND DATE_SUB(CURDATE(), INTERVAL 14 DAY) &lt;= DATE(time)
-            </if>
-            <if test='time == "近一月"'>
-                AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(time)
-            </if>
-            <if test='time == "近两月"'>
-                AND DATE_SUB(CURDATE(), INTERVAL 60 DAY) &lt;= DATE(time)
-            </if>
+          <if test='time != "1"'>
+              <if test='time == "7"'>
+                  AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(time)
+              </if>
+              <if test='time == "30"'>
+                  AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(time)
+              </if>
+              <if test='time == "365"'>
+                  AND DATE_SUB(CURDATE(), INTERVAL 365 DAY) &lt;= DATE(time)
+              </if>
+          </if>
         </if>
         <if test="nature != null">
             AND nature = #{nature}
