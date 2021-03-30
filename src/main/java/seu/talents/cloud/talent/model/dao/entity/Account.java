@@ -32,5 +32,9 @@ public class Account {
     @Column(name = "canRecom")
     private String canRecom;
     private String password;
+    private Integer gender;
+    private String city;
+    @Column(name = "isDaShi")
+    private Integer isDaShi;
 
 }

@@ -15,9 +15,10 @@ public class CONST {
 //    public static final int FRIEND_ACTION_N = 0;
 
     // wx 参数
-    public static final String appId = "wxb6c2adef86425b32";
-    public static final String appSecret = "e582762fae203188f5258484504473dd";
-
+//    public static final String appId = "wxb6c2adef86425b32";
+//    public static final String appSecret = "e582762fae203188f5258484504473dd";
+    public static final String appId = "wxc7c9545bbc115d85";
+    public static final String appSecret = "d908ea1821b732e6f64f1a96d7fe081c";
     //微信统一下单接口地址
     public static final String pay_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 

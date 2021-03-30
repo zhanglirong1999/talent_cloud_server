@@ -10,8 +10,8 @@ import java.util.Map;
 @Repository
 public interface V2ApiMapper {
     @Select("Select accountId,name,avatar,collage,gradYear,gradDegree,company,job from account where " +
-            "CONCAT (`name`,`collage`,`company`,`job`) like '%${content}%' limit ${pageIndex},${pageSize}")
-    List<Map<String,Object>> searchByName(String content, Integer pageIndex,Integer pageSize);
+            "CONCAT (`name`,`collage`,`company`,`job`) like '%${content}%' limit ${pageIndex},20")
+    List<Map<String,Object>> searchByName(String content, Integer pageIndex);
 
 
 

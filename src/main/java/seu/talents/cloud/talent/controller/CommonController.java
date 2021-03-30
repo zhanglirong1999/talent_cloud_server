@@ -57,6 +57,9 @@ public class CommonController {
     @Autowired
     private V2ApiMapper v2ApiMapper;
 
+    @Autowired
+    private AccountMapper accountMapper;
+
     @TokenRequired
     @PostMapping("/uploadFile")
     public Object uploadFile(
@@ -123,28 +126,30 @@ public class CommonController {
     }
 
     @TokenRequired
-    @RequestMapping("/recommend")
-    public Object recommend(@RequestParam int pageIndex,
-                                 @RequestParam int pageSize) {
+    @RequestMapping("/alumni/recommend")
+    public Object recommend( @RequestParam int filter,
+                                @RequestParam int pageIndex
+                               ) {
         String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
-        PageHelper.startPage(pageIndex, pageSize);
-        List<AlumniCircleBasicInfoDTO> res = alumniCircleMapper.alumniCirclesRecommend(accountId);
-//        res.forEach(alumniCircleBasicInfoDTO -> {
-//            alumniCircleBasicInfoDTO.setIsJoined(
-//                    alumniCircleMemberMapper.isJoined(alumniCircleBasicInfoDTO.getAlumniCircleId(), accountId)
-//            );
-//        });
-        return new PageResult<AlumniCircleBasicInfoDTO>(((Page)res).getTotal(),res);
+        if(filter==0){
+            return accountMapper.getListByCollege(accountId,pageIndex);
+        }else if(filter==1){
+            return accountMapper.getListByCity(accountId,pageIndex);
+        }else if(filter==2){
+            return accountMapper.getListByMaybe(accountId,pageIndex);
+        }else {
+            return accountMapper.getListByDaShi(pageIndex);
+        }
 
     }
 
     @TokenRequired
     @RequestMapping("/query")
     public Object query(@RequestParam String content,
-                             @RequestParam int pageSize,
+
                              @RequestParam int pageIndex) {
 
-            return v2ApiMapper.searchByName(content,pageIndex,pageSize);
+            return v2ApiMapper.searchByName(content,pageIndex);
 
     }
 

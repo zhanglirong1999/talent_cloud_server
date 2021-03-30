@@ -184,7 +184,9 @@ public class AccountController {
         Map<String, Object> result = WXBizDataCryptUtil.decrypt((String)map.get("session_key"), param.getEncryptedData(), param.getIv());
         String unionId = (String)result.get("unionId");
         String avatarUrl = (String)result.get("avatarUrl");
-        accountMapper.updateAvatar(avatarUrl,unionId,accountId);
+        Integer gender = (Integer)result.get("sex");
+        String city = (String)result.get("city");
+        accountMapper.updateAvatar(avatarUrl,unionId,accountId,gender,city);
         return avatarUrl;
     }
 
