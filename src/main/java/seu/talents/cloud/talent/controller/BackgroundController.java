@@ -38,32 +38,32 @@ public class BackgroundController {
 
     @GetMapping("/posts")
     public Object getPosts(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam Integer postType) {
-        return databasePostService.getPostInformationByPage(pageIndex, pageSize, postType);
+        return databasePostService.getPostInformationWithTotalCountByPage(pageIndex, pageSize, postType);
     }
 
     @GetMapping("/job-fairs")
     public Object getJobFairs(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
-        return databaseJobFairService.getJobFairsByPage(pageIndex, pageSize);
+        return databaseJobFairService.getJobFairsWithTotalCountByPage(pageIndex, pageSize);
     }
 
     @GetMapping("/lectures")
     public Object getLectures(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
-        return databaseLectureService.getLectureByPage(pageIndex, pageSize);
+        return databaseLectureService.getLectureWithTotalCountByPage(pageIndex, pageSize);
     }
 
     @GetMapping("/recruitments")
     public Object getRecruitments(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
-        return databaseRecruitmentService.getRecruitmentByPage(pageIndex, pageSize);
+        return databaseRecruitmentService.getRecruitmentWithTotalCountByPage(pageIndex, pageSize);
     }
 
     @GetMapping("/selected-graduates")
     public Object getSelectedGraduates(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
-        return databaseSelectedGraduatesAndInternationalOrganizationService.getByPage(pageIndex, pageSize, 0);
+        return databaseSelectedGraduatesAndInternationalOrganizationService.getWithTotalCountByPage(pageIndex, pageSize, 0);
     }
 
     @GetMapping("/international-organizations")
     public Object getInternationalOrganizations(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
-        return databaseSelectedGraduatesAndInternationalOrganizationService.getByPage(pageIndex, pageSize, 1);
+        return databaseSelectedGraduatesAndInternationalOrganizationService.getWithTotalCountByPage(pageIndex, pageSize, 1);
     }
 
     @PostMapping("/posts")

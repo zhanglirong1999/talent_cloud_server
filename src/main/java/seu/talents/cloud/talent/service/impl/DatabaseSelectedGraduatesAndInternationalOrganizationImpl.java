@@ -3,10 +3,12 @@ package seu.talents.cloud.talent.service.impl;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.model.dao.entity.SelectedGraduatesOrInternationalOrganization;
 import seu.talents.cloud.talent.model.dao.mapper.SelectedGraduatesOrInternationalOrganizationMapper;
 import seu.talents.cloud.talent.model.dto.post.SelectedGraduatesAndInternationalOrganizationSearchDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.InformationWithTotalCountDTO;
 import seu.talents.cloud.talent.service.SelectedGraduatesAndInternationalOrganizationService;
 
 import java.util.List;
@@ -38,6 +40,15 @@ public class DatabaseSelectedGraduatesAndInternationalOrganizationImpl
                 selectedGraduatesAndInternationalOrganizationSearchDTO.getKeyWord(),
                 type
         );
+    }
+
+    @Override
+    @Transactional
+    public InformationWithTotalCountDTO getWithTotalCountByPage(Integer pageIndex, Integer pageSize, Integer type) {
+        Integer count = selectedGraduatesOrInternationalOrganizationMapper.getTotalCount(type);
+        PageHelper.startPage(pageIndex, pageSize);
+        List<SelectedGraduatesOrInternationalOrganization> res = selectedGraduatesOrInternationalOrganizationMapper.getAll(type);
+        return new InformationWithTotalCountDTO(count, res);
     }
 
     @Override

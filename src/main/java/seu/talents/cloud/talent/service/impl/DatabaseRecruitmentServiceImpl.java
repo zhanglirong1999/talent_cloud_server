@@ -3,10 +3,12 @@ package seu.talents.cloud.talent.service.impl;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.model.dao.entity.Recruitment;
 import seu.talents.cloud.talent.model.dao.mapper.RecruitmentMapper;
 import seu.talents.cloud.talent.model.dto.post.RecruitmentSearchDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.InformationWithTotalCountDTO;
 import seu.talents.cloud.talent.service.RecruitmentService;
 
 import java.util.List;
@@ -36,6 +38,15 @@ public class DatabaseRecruitmentServiceImpl implements RecruitmentService {
                 recruitmentSearchDTO.getCity(),
                 recruitmentSearchDTO.getTime()
         );
+    }
+
+    @Override
+    @Transactional
+    public InformationWithTotalCountDTO getRecruitmentWithTotalCountByPage(Integer pageIndex, Integer pageSize) {
+        Integer count = recruitmentMapper.getTotalCount();
+        PageHelper.startPage(pageIndex, pageSize);
+        List<Recruitment> res = recruitmentMapper.getAll();
+        return new InformationWithTotalCountDTO(count, res);
     }
 
     @Override

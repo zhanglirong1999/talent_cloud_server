@@ -3,10 +3,12 @@ package seu.talents.cloud.talent.service.impl;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.model.dao.entity.Post;
 import seu.talents.cloud.talent.model.dao.mapper.PostMapper;
 import seu.talents.cloud.talent.model.dto.post.PostSearchDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.InformationWithTotalCountDTO;
 import seu.talents.cloud.talent.service.PostService;
 
 import java.util.List;
@@ -42,6 +44,15 @@ public class DatabasePostServiceImpl implements PostService {
                 postSearchDTO.getNature(),
                 postSearchDTO.getScale()
         );
+    }
+
+    @Override
+    @Transactional
+    public InformationWithTotalCountDTO getPostInformationWithTotalCountByPage(Integer pageIndex, Integer pageSize, Integer postType) {
+        Integer count = postMapper.getTotalCount(postType);
+        PageHelper.startPage(pageIndex, pageSize);
+        List<Post> res = postMapper.getAll(postType);
+        return new InformationWithTotalCountDTO(count, res);
     }
 
     @Override

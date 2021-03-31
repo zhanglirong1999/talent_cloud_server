@@ -7,6 +7,10 @@
         WHERE deleted = 0
     </select>
 
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM job_fair WHERE deleted = 0
+    </select>
+
     <insert id="add" parameterType="seu.talents.cloud.talent.model.dao.entity.JobFair">
         INSERT INTO job_fair (
             jobFairId,

@@ -13,6 +13,7 @@ import seu.talents.cloud.talent.common.config.httprequest.HttpRequestConstValue;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Recruitment;
 import seu.talents.cloud.talent.model.dto.post.RecruitmentSearchDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.InformationWithTotalCountDTO;
 import seu.talents.cloud.talent.service.RecruitmentService;
 import seu.talents.cloud.talent.util.ConstantUtil;
 import seu.talents.cloud.talent.util.RegexUtil;
@@ -85,6 +86,11 @@ public class DynamicParseRecruitmentServiceImpl implements RecruitmentService {
                 recruitmentSearchDTO.getTime(),
                 recruitmentSearchDTO.getPageIndex()
         );
+    }
+
+    @Override
+    public InformationWithTotalCountDTO getRecruitmentWithTotalCountByPage(Integer pageIndex, Integer pageSize) {
+        return null;
     }
 
     @Override
