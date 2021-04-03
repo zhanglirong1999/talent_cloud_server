@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.model.dao.entity.JobFair;
 import seu.talents.cloud.talent.model.dao.mapper.JobFairMapper;
 import seu.talents.cloud.talent.model.dto.post.JobFairSearchDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.InformationWithTotalCountDTO;
 import seu.talents.cloud.talent.service.JobFairService;
 
 import java.util.List;
@@ -38,6 +40,15 @@ public class DatabaseJobFairServiceImpl implements JobFairService {
                 jobFairSearchDTO.getCity(),
                 jobFairSearchDTO.getTime()
         );
+    }
+
+    @Override
+    @Transactional
+    public InformationWithTotalCountDTO getJobFairsWithTotalCountByPage(Integer pageIndex, Integer pageSize) {
+        Integer count = jobFairMapper.getTotalCount();
+        PageHelper.startPage(pageIndex, pageSize);
+        List<JobFair> res = jobFairMapper.getAll();
+        return new InformationWithTotalCountDTO(count, res);
     }
 
     @Override

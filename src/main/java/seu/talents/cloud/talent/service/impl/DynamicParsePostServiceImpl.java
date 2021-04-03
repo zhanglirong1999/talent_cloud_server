@@ -13,6 +13,7 @@ import seu.talents.cloud.talent.common.config.httprequest.HttpRequestConstValue;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Post;
 import seu.talents.cloud.talent.model.dto.post.PostSearchDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.InformationWithTotalCountDTO;
 import seu.talents.cloud.talent.service.PostService;
 import seu.talents.cloud.talent.util.ConstantUtil;
 import seu.talents.cloud.talent.util.RegexUtil;
@@ -103,6 +104,11 @@ public class DynamicParsePostServiceImpl implements PostService {
                 postSearchDTO.getScale(),
                 postSearchDTO.getPageIndex()
         );
+    }
+
+    @Override
+    public InformationWithTotalCountDTO getPostInformationWithTotalCountByPage(Integer pageIndex, Integer pageSize, Integer postType) {
+        return null;
     }
 
     @Override

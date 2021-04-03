@@ -10,6 +10,7 @@ import java.util.List;
 public interface RecruitmentMapper extends Mapper<Recruitment> {
     List<Recruitment> getAll();
     List<Recruitment> searchRecruitment(String keyWord, String range, String city, String time);
+    Integer getTotalCount();
     void add(Recruitment recruitment);
     void deleteById(Long recruitmentId);
     void updateById(Recruitment recruitment);

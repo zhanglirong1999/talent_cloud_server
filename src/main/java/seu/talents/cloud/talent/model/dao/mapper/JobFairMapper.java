@@ -10,6 +10,7 @@ import java.util.List;
 public interface JobFairMapper extends Mapper<JobFair> {
     List<JobFair> getAll();
     List<JobFair> searchJobFair(String keyWord, String range, String type, String city, String time);
+    Integer getTotalCount();
     void add(JobFair jobFair);
     void deleteById(Long jobFairId);
     void updateById(JobFair jobFair);

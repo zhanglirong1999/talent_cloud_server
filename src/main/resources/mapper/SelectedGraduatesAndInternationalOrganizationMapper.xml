@@ -7,6 +7,10 @@
         WHERE deleted = 0 AND type = #{type}
     </select>
 
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM selected_graduates_and_international_organization WHERE deleted = 0 AND type = #{type}
+    </select>
+
     <insert id="add" parameterType="seu.talents.cloud.talent.model.dao.entity.SelectedGraduatesOrInternationalOrganization">
         INSERT INTO selected_graduates_and_international_organization (
             id,

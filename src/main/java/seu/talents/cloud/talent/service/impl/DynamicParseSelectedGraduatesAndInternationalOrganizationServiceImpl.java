@@ -13,6 +13,7 @@ import seu.talents.cloud.talent.common.config.httprequest.HttpRequestConstValue;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.SelectedGraduatesOrInternationalOrganization;
 import seu.talents.cloud.talent.model.dto.post.SelectedGraduatesAndInternationalOrganizationSearchDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.InformationWithTotalCountDTO;
 import seu.talents.cloud.talent.service.SelectedGraduatesAndInternationalOrganizationService;
 import seu.talents.cloud.talent.util.ConstantUtil;
 import seu.talents.cloud.talent.util.RegexUtil;
@@ -96,6 +97,11 @@ public class DynamicParseSelectedGraduatesAndInternationalOrganizationServiceImp
                 dto.getKeyWord(),
                 dto.getPageIndex()
         );
+    }
+
+    @Override
+    public InformationWithTotalCountDTO getWithTotalCountByPage(Integer pageIndex, Integer pageSize, Integer type) {
+        return null;
     }
 
     @Override

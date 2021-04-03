@@ -13,6 +13,7 @@ import seu.talents.cloud.talent.common.config.httprequest.HttpRequestConstValue;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.JobFair;
 import seu.talents.cloud.talent.model.dto.post.JobFairSearchDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.InformationWithTotalCountDTO;
 import seu.talents.cloud.talent.service.JobFairService;
 import seu.talents.cloud.talent.util.ConstantUtil;
 import seu.talents.cloud.talent.util.RegexUtil;
@@ -89,6 +90,11 @@ public class DynamicParseJobFairServiceImpl implements JobFairService {
                 jobFairSearchDTO.getTime(),
                 jobFairSearchDTO.getPageIndex()
         );
+    }
+
+    @Override
+    public InformationWithTotalCountDTO getJobFairsWithTotalCountByPage(Integer pageIndex, Integer pageSize) {
+        return null;
     }
 
     @Override
