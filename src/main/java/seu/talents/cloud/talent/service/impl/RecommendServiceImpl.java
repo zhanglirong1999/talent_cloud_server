@@ -88,6 +88,7 @@ public class RecommendServiceImpl implements RecommendService {
     public Object getRecommendList(Integer pageIndex,Integer type) {
         Iterator<Recommend> iterator= recommendMapper.getRecommendList(pageIndex,type).iterator();
         List<Map<String,Object>> list = new LinkedList<>();
+        Integer count = recommendMapper.getRecommendListCount(type);
         while(iterator.hasNext()){
             Recommend recommend = iterator.next();
             Map<String,Object> map = new HashMap<>();
@@ -109,6 +110,7 @@ public class RecommendServiceImpl implements RecommendService {
             map.put("college",accountMapper.getCollage(recommend.getAid()));
             map.put("unit",recommend.getUnit());
             map.put("type",recommend.getType());
+            map.put("pageCount",count);
             list.add(map);
         }
         return list;
@@ -159,6 +161,7 @@ public class RecommendServiceImpl implements RecommendService {
     public Object getRecommendSearch(String keyword, Integer pageIndex) {
         Iterator<Recommend> iterator= recommendMapper.getRecommendSearch(keyword, pageIndex).iterator();
         List<Map<String,Object>> list = new LinkedList<>();
+        Integer count = recommendMapper.getRecommendSearchCount(keyword);
         while(iterator.hasNext()){
             Recommend recommend = iterator.next();
             Map<String,Object> map = new HashMap<>();
@@ -176,6 +179,7 @@ public class RecommendServiceImpl implements RecommendService {
             map.put("createTime",recommend.getCreateTime());
             map.put("account",accountMapper.getName(recommend.getAid()));
             map.put("img",recommendPictureMapper.getUrl(recommend.getRid()));
+            map.put("count",count);
             list.add(map);
         }
         return list;

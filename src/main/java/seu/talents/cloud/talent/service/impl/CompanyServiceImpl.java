@@ -11,6 +11,8 @@ import seu.talents.cloud.talent.util.ConstantUtil;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
+import java.util.*;
+
 @Service
 public class CompanyServiceImpl implements CompanyService {
     @Autowired
@@ -85,16 +87,84 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Object getSearch(String keyword,Integer pageIndex) {
-        return companyMapper.getSearch(keyword,pageIndex);
+        Iterator<Company> iterator = companyMapper.getSearch(keyword,pageIndex).iterator();
+        Integer count = companyMapper.getSearchCount(keyword);
+        List<Map<String,Object>> list = new LinkedList<>();
+        while (iterator.hasNext()){
+            Map<String,Object> map = new HashMap<>();
+            Company company = iterator.next();
+            String name = company.getName();
+            map.put("cid",company.getCid());
+            map.put("name",company.getName());
+            map.put("logo",company.getLogo());
+            map.put("info",company.getInfo());
+            map.put("url",company.getUrl());
+            map.put("heat",company.getHeat());
+            map.put("count",company.getCount());
+            map.put("type",company.getType());
+            map.put("takeCount",company.getTakeCount());
+            map.put("city",company.getCity());
+            map.put("passRate",company.getPassRate());
+            map.put("recommendCount",companyMapper.getRecommendCount(name));
+            map.put("experience","经验贴");
+            map.put("pageCounts",count);
+            list.add(map);
+        }
+
+        return list;
     }
 
     @Override
     public Object getCompanyList(String key, Integer pageIndex) {
+        List<Map<String,Object>> list = new LinkedList<>();
+        Integer count = companyMapper.getCompanyCount();
         if(key.equals("0")) {
-            return companyMapper.getCompanyListByHeat(pageIndex);
+            Iterator<Company> iterator = companyMapper.getCompanyListByHeat(pageIndex).iterator();
+            while (iterator.hasNext()){
+                Map<String,Object> map = new HashMap<>();
+                Company company = iterator.next();
+                String name = company.getName();
+                map.put("cid",company.getCid());
+                map.put("name",company.getName());
+                map.put("logo",company.getLogo());
+                map.put("info",company.getInfo());
+                map.put("url",company.getUrl());
+                map.put("heat",company.getHeat());
+                map.put("count",company.getCount());
+                map.put("type",company.getType());
+                map.put("takeCount",company.getTakeCount());
+                map.put("city",company.getCity());
+                map.put("passRate",company.getPassRate());
+                map.put("recommendCount",companyMapper.getRecommendCount(name));
+                map.put("experience","经验贴");
+                map.put("pageCounts",count);
+                list.add(map);
+            }
+
         } else {
-            return companyMapper.getCompanyListByCount(pageIndex);
+            Iterator<Company> iterator = companyMapper.getCompanyListByCount(pageIndex).iterator();
+            while (iterator.hasNext()){
+                Map<String,Object> map = new HashMap<>();
+                Company company = iterator.next();
+                String name = company.getName();
+                map.put("cid",company.getCid());
+                map.put("name",company.getName());
+                map.put("logo",company.getLogo());
+                map.put("info",company.getInfo());
+                map.put("url",company.getUrl());
+                map.put("heat",company.getHeat());
+                map.put("count",company.getCount());
+                map.put("type",company.getType());
+                map.put("takeCount",company.getTakeCount());
+                map.put("city",company.getCity());
+                map.put("passRate",company.getPassRate());
+                map.put("recommendCount",companyMapper.getRecommendCount(name));
+                map.put("experience","经验贴");
+                map.put("pageCounts",count);
+                list.add(map);
+            }
         }
+        return list;
     }
 
     @Override

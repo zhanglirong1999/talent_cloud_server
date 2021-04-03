@@ -16,13 +16,19 @@ public interface CompanyMapper extends Mapper<Company> {
     Integer deleteCompany(@Param("cid")Long cid);
 
     @Select("select * from company where name like '%${index}%' and deleted=0 limit ${pageIndex},20")
-    List<Map<String,Object>> getSearch(@Param("index")String index,@Param("pageIndex") Integer pageIndex);
+    List<Company> getSearch(@Param("index")String index,@Param("pageIndex") Integer pageIndex);
+
+    @Select("select count(*) from company where name like '%${index}%'")
+    Integer getSearchCount(String index);
+
+    @Select("select count(*) from company where deleted=0")
+    Integer getCompanyCount();
 
     @Select("select * from company where deleted=0 order by heat+0 desc limit ${pageIndex},20")
-    List<Map<String,Object>> getCompanyListByHeat(@Param("pageIndex") Integer pageIndex);
+    List<Company> getCompanyListByHeat(@Param("pageIndex") Integer pageIndex);
 
     @Select("select * from company where deleted=0 order by count desc limit ${pageIndex},20")
-    List<Map<String,Object>> getCompanyListByCount(@Param("pageIndex") Integer pageIndex);
+    List<Company> getCompanyListByCount(@Param("pageIndex") Integer pageIndex);
 
     @Select("select cid,name from company where deleted=0")
     List<Map<String,Object>> getNameList();
@@ -35,4 +41,7 @@ public interface CompanyMapper extends Mapper<Company> {
 
     @Select("select * from company where name='${name}'")
     Company getCompany(String name);
+
+    @Select("select count(*) from recommend where company='${name}'")
+    Integer getRecommendCount(String name);
 }

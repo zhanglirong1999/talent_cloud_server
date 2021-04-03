@@ -17,11 +17,17 @@ public interface RecommendMapper extends Mapper<Recommend> {
     @Select("SELECT * FROM recommend WHERE type=${type} ORDER BY createTime DESC LIMIT ${pageIndex},20")
     List<Recommend> getRecommendList(Integer pageIndex,Integer type);
 
+    @Select("SELECT count(*) FROM recommend WHERE type=${type}")
+    Integer getRecommendListCount(Integer type);
+
     @Select("SELECT * FROM recommend WHERE rid=${rid}")
     Recommend getRecommend(Long rid);
 
     @Select("SELECT * FROM recommend WHERE name like '%${keyword}%' ORDER BY createTime DESC LIMIT ${pageIndex},20")
     List<Recommend> getRecommendSearch(String keyword,Integer pageIndex);
+
+    @Select("SELECT count(*) FROM recommend WHERE name like '%${keyword}%'")
+    Integer getRecommendSearchCount(String keyword);
 
     @Select("Select count(*) from recommend where name='${name}'")
     Integer getCompanyName(String name);
