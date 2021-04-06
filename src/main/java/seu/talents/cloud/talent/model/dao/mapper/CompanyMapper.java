@@ -18,7 +18,7 @@ public interface CompanyMapper extends Mapper<Company> {
     @Select("select * from company where name like '%${index}%' and deleted=0 limit ${pageIndex},20")
     List<Company> getSearch(@Param("index")String index,@Param("pageIndex") Integer pageIndex);
 
-    @Select("select count(*) from company where name like '%${index}%'")
+    @Select("select count(*) from company where name like '%${index}%' and deleted=0")
     Integer getSearchCount(String index);
 
     @Select("select count(*) from company where deleted=0")
