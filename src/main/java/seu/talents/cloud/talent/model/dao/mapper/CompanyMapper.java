@@ -22,7 +22,7 @@ public interface CompanyMapper extends Mapper<Company> {
     Integer getSearchCount(String index);
 
     @Select("select count(*) from company where deleted=0")
-    Integer getCompanyCount();
+    Integer getCompanyCount1();
 
     @Select("select * from company where deleted=0 order by heat+0 desc limit ${pageIndex},20")
     List<Company> getCompanyListByHeat(@Param("pageIndex") Integer pageIndex);

@@ -117,7 +117,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Object getCompanyList(String key, Integer pageIndex) {
         List<Map<String,Object>> list = new LinkedList<>();
-        Integer count = companyMapper.getCompanyCount();
+        Integer count = companyMapper.getCompanyCount1();
         if(key.equals("0")) {
             Iterator<Company> iterator = companyMapper.getCompanyListByHeat(pageIndex).iterator();
             while (iterator.hasNext()){
