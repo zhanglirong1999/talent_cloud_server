@@ -78,13 +78,13 @@ public class CompanyController {
     /**
      * 获取公司列表
      * @param pageIndex
-     * @param key
+     * @param filter
      * @return
      */
     @TokenRequired
     @GetMapping("/list")
-    public Object getCompanyList(@RequestParam Integer pageIndex,@RequestParam String key){
-        return companyService.getCompanyList(key, pageIndex);
+    public Object getCompanyList(@RequestParam Integer pageIndex,@RequestParam String filter){
+        return companyService.getCompanyList(filter, pageIndex);
     }
 
     /**

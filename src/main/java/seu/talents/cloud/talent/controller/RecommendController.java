@@ -69,8 +69,8 @@ public class RecommendController {
     @TokenRequired
     @GetMapping("/list")
     public Object getRecommend(@RequestParam Integer pageIndex,
-                               @RequestParam Integer type){
-        return recommendService.getRecommendList(pageIndex,type);
+                               @RequestParam Integer filter){
+        return recommendService.getRecommendList(pageIndex,filter);
     }
 
     /**

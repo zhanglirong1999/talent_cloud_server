@@ -11,6 +11,7 @@ import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.common.annotation.TokenRequired;
 import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.exception.BizException;
+import seu.talents.cloud.talent.model.dao.entity.Account;
 import seu.talents.cloud.talent.model.dao.entity.Favorite;
 import seu.talents.cloud.talent.model.dao.entity.Friend;
 import seu.talents.cloud.talent.model.dao.entity.Job;
@@ -18,10 +19,7 @@ import seu.talents.cloud.talent.model.dao.mapper.*;
 import seu.talents.cloud.talent.model.dto.PageResult;
 import seu.talents.cloud.talent.model.dto.post.*;
 import seu.talents.cloud.talent.model.dto.returnDTO.JobDTO;
-import seu.talents.cloud.talent.service.MessageService;
-import seu.talents.cloud.talent.service.QCloudFileManager;
-import seu.talents.cloud.talent.service.SecurityService;
-import seu.talents.cloud.talent.service.SubscribeMessageService;
+import seu.talents.cloud.talent.service.*;
 import seu.talents.cloud.talent.util.ConstantUtil;
 import tk.mybatis.mapper.entity.Example;
 
@@ -323,6 +321,40 @@ public class CommonController {
         favorite.setStatus(1);
         favoriteMapper.updateByExampleSelective(favorite, example);
         return 1;
+    }
+
+    @Autowired
+    private AccountService accountService;
+
+
+    @RequestMapping("/accountAll")
+    public Object getAccountInfo(@RequestParam String accountId) {
+
+        String myAccountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+
+        AccountAllDTO accountAllDTO = accountService.getAccountAllDTOById(accountId);
+        if (!myAccountId.equals(accountId)) {
+            // 获取两人关系
+            Friend relationShip = friendMapper.getRelationShip(myAccountId, accountId);
+            if (relationShip != null) {
+                accountAllDTO.setRelationShip(relationShip.getStatus());
+                if (relationShip.getStatus() != FriendStatus.friend.getStatus()) {
+//                    accountAllDTO.getAccount().setBirthday(null);
+//                    accountAllDTO.getAccount().setWechat(null);
+                    accountAllDTO.getAccount().setPhone(null);
+                }
+            }
+            // 获取收藏状态
+            Favorite favorite = new Favorite();
+            favorite.setAccountId(myAccountId);
+            favorite.setFavoriteAccountId(accountId);
+            List<Favorite> temp = favoriteMapper.select(favorite);
+            if (temp.size() > 0) {
+                accountAllDTO.setFavorite(temp.get(0).getStatus());
+            }
+        }
+
+        return accountAllDTO;
     }
 
 

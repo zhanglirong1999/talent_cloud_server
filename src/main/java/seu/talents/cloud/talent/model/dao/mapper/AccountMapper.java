@@ -32,23 +32,23 @@ public interface AccountMapper extends Mapper<Account> {
     @Select("Select * from account where accountId='${aid}'")
     Account getAccount(String aid);
 
-    @Select("select b.accountId,b.avatar,b.name,b.city,b.collage,b.gradYear,b.gradDegree,b.company,b.job\n" +
+    @Select("select b.accountId,b.avatar,b.name,b.city,b.collage as college,b.gradYear,b.gradDegree,b.company,b.job\n" +
             "from talentCloud.account b inner join talentCloud.account a on b.city = a.city and a.accountId='${accountId}'\n" +
             "limit ${page},20")
     List<Map<String,Object>> getListByCity(String accountId,Integer page);
 
-    @Select("select b.accountId,b.avatar,b.name,b.city,b.collage,b.gradYear,b.gradDegree,b.company,b.job\n" +
+    @Select("select b.accountId,b.avatar,b.name,b.city,b.collage as college,b.gradYear,b.gradDegree,b.company,b.job\n" +
             "from talentCloud.account b inner join talentCloud.account a on b.collage = a.collage and a.accountId='${accountId}'\n" +
             "limit ${page},20")
     List<Map<String,Object>> getListByCollege(String accountId,Integer page);
 
-    @Select("select b.accountId,b.avatar,b.name,b.city,b.collage,b.gradYear,b.gradDegree,b.company,b.job\n" +
+    @Select("select b.accountId,b.avatar,b.name,b.city,b.collage as college,b.gradYear,b.gradDegree,b.company,b.job\n" +
             "from talentCloud.account b inner join talentCloud.account a on b.company=a.company or b.job=a.job or b.gradYear=a.gradYear" +
             " and a.accountId='${accountId}'\n" +
             "limit ${page},20")
     List<Map<String,Object>> getListByMaybe(String accountId,Integer page);
 
-    @Select("select b.accountId,b.avatar,b.name,b.city,b.collage,b.gradYear,b.gradDegree,b.company,b.job\n" +
+    @Select("select b.accountId,b.avatar,b.name,b.city,b.collage as college,b.gradYear,b.gradDegree,b.company,b.job\n" +
             "from talentCloud.account b where isDaShi=1'\n" +
             "limit ${page},20")
     List<Map<String,Object>> getListByDaShi(Integer page);
