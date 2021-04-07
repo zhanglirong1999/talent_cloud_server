@@ -143,11 +143,11 @@ public class CommonController {
 
     @TokenRequired
     @RequestMapping("/query")
-    public Object query(@RequestParam String content,
+    public Object query(@RequestParam String keyword,
 
                              @RequestParam int pageIndex) {
 
-            return v2ApiMapper.searchByName(content,pageIndex);
+            return v2ApiMapper.searchByName(keyword,pageIndex);
 
     }
 
