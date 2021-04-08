@@ -102,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
         Example example2 = new Example(Job.class);
         example2.orderBy("endTime").desc();
         example2.createCriteria().andEqualTo("accountId", accountId)
-                .andEqualTo("validStatus", true);
+                .andEqualTo("deleted", 0);
 
         accountAllDTO.setJobs(jobMapper.selectByExample(example2)
                 .stream().map(JobDTO::new).collect(Collectors.toList()));

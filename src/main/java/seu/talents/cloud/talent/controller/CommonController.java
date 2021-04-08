@@ -160,7 +160,7 @@ public class CommonController {
     @Autowired
     private SubscribeMessageService subscribeMessageService;
 
-  //  @TokenRequired
+    @TokenRequired
     @PostMapping("/friend/manage")
     @Transactional
     public Object friendAction(@RequestBody Map<String, String> req) {
@@ -238,7 +238,7 @@ public class CommonController {
         return "success";
     }
 
-   // @TokenRequired
+    @TokenRequired
     @PostMapping("/friend/apply")
     @Transactional
     public Object friendApply(@RequestBody FriendApplyDTO friendApplyDTO) {
@@ -279,7 +279,7 @@ public class CommonController {
     FavoriteMapper favoriteMapper;
 
    // @RegistrationRequired
-//    @TokenRequired
+    @TokenRequired
     @PostMapping("/favorite")
     public Object changeFavoriteStatus(@RequestBody Map req) {
         String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
@@ -326,7 +326,7 @@ public class CommonController {
     @Autowired
     private AccountService accountService;
 
-
+    @TokenRequired
     @RequestMapping("/accountAll")
     public Object getAccountInfo(@RequestParam String accountId) {
 

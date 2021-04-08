@@ -10,6 +10,7 @@ import javax.persistence.Column;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Job {
+    @Column(name ="accountId")
     String accountId;
     @Column(name ="jobId")
     Long jobId;
