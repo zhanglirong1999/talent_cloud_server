@@ -36,5 +36,6 @@ public class Account {
     private String city;
     @Column(name = "isDaShi")
     private Integer isDaShi;
+    private String industry;
 
 }

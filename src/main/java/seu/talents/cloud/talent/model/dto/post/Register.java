@@ -16,4 +16,6 @@ public class Register {
     String company;
     String job;
     String canRecom;
+    String industry;
+
 }

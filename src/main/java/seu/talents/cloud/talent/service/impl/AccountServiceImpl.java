@@ -46,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
         account.setJob(register.getJob());
         account.setCanRecom(register.getCanRecom());
         account.setAvatar(CONST.avatar);
+        account.setIndustry(register.getIndustry());
         accountMapper.updateByPrimaryKeySelective(account);
     }
 

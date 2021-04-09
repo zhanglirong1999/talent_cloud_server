@@ -1,5 +1,6 @@
 package seu.talents.cloud.talent.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Call;
@@ -8,6 +9,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import lombok.Data;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -28,7 +30,16 @@ import seu.talents.cloud.talent.util.WXBizDataCryptUtil;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.*;
+import java.security.spec.AlgorithmParameterSpec;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -201,6 +212,56 @@ public class AccountController {
         String token = TokenUtil.createToken(accountId);
         System.out.println(token);
         return token;
+    }
+
+    @TokenRequired
+    @GetMapping("/decoded-phone")
+    public Object getPhoneNumber(@RequestParam String encryptedData,
+                                 @RequestParam String iv,
+                                 @RequestParam String js_code) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        // 微信登陆，获取openid
+        String wxApiUrl = "https://api.weixin.qq.com/sns/jscode2session?" +
+                "appid=" + CONST.appId +
+                "&secret=" + CONST.appSecret +
+                "&js_code=" + js_code +
+                "&grant_type=authorization_code";
+        String respronse = restTemplate.getForObject(wxApiUrl, String.class);
+        Map res = new Gson().fromJson(respronse, Map.class);
+        System.out.println(res);
+
+        String session_key = (String) res.get("session_key");
+        // 被加密的数据
+        byte[] dataByte = Base64.getDecoder().decode(encryptedData);
+        // 加密秘钥
+        byte[] keyByte = Base64.getDecoder().decode(session_key);
+        // 偏移量
+        byte[] ivByte = Base64.getDecoder().decode(iv);
+        try {
+            // 如果密钥不足16位，那么就补足.  这个if 中的内容很重要
+            int base = 16;
+            if (keyByte.length % base != 0) {
+                int groups = keyByte.length / base + (keyByte.length % base != 0 ? 1 : 0);
+                byte[] temp = new byte[groups * base];
+                Arrays.fill(temp, (byte) 0);
+                System.arraycopy(keyByte, 0, temp, 0, keyByte.length);
+                keyByte = temp;
+            }
+            // 初始化
+            Security.addProvider(new BouncyCastleProvider());
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            SecretKeySpec spec = new SecretKeySpec(keyByte, "AES");
+            AlgorithmParameters parameters = AlgorithmParameters.getInstance("AES");
+            parameters.init(new IvParameterSpec(ivByte));
+            cipher.init(Cipher.DECRYPT_MODE, spec, parameters);// 初始化
+            byte[] resultByte = cipher.doFinal(dataByte);
+            if (null != resultByte && resultByte.length > 0) {
+                String result = new String(resultByte, "UTF-8");
+                return JSONObject.parseObject(result);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
