@@ -33,7 +33,8 @@ public class ConstantUtil {
         FAIL_PICTURE(13,"文字或图片含有敏感信息"),
         FAIL_FRIEND(14,"处理人id A,B 不能为null"),
         TWICE_APPLY(15,"请勿重复申请"),
-        FILE_STATUS(16,"status只能为0或1")
+        FILE_STATUS(16,"status只能为0或1"),
+        NO_BANNER(17,"此banner不存在")
 
 
 

@@ -11,10 +11,7 @@ import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.common.annotation.TokenRequired;
 import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.exception.BizException;
-import seu.talents.cloud.talent.model.dao.entity.Account;
-import seu.talents.cloud.talent.model.dao.entity.Favorite;
-import seu.talents.cloud.talent.model.dao.entity.Friend;
-import seu.talents.cloud.talent.model.dao.entity.Job;
+import seu.talents.cloud.talent.model.dao.entity.*;
 import seu.talents.cloud.talent.model.dao.mapper.*;
 import seu.talents.cloud.talent.model.dto.PageResult;
 import seu.talents.cloud.talent.model.dto.post.*;
@@ -45,7 +42,6 @@ public class CommonController {
     @Autowired
     SecurityService securityService;
 
-
     @Autowired
     AlumniCircleMapper alumniCircleMapper;
 
@@ -57,6 +53,21 @@ public class CommonController {
 
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private FriendMapper friendMapper;
+
+    @Autowired
+    private MessageService messageService;
+
+    @Autowired
+    private SubscribeMessageService subscribeMessageService;
+
+    @Autowired
+    FavoriteMapper favoriteMapper;
+
+    @Autowired
+    private AccountService accountService;
 
     @TokenRequired
     @PostMapping("/uploadFile")
@@ -151,14 +162,6 @@ public class CommonController {
 
     }
 
-    @Autowired
-    private FriendMapper friendMapper;
-
-    @Autowired
-    private MessageService messageService;
-
-    @Autowired
-    private SubscribeMessageService subscribeMessageService;
 
     @TokenRequired
     @PostMapping("/friend/manage")
@@ -275,8 +278,6 @@ public class CommonController {
         return "success";
     }
 
-    @Autowired
-    FavoriteMapper favoriteMapper;
 
    // @RegistrationRequired
     @TokenRequired
@@ -323,9 +324,6 @@ public class CommonController {
         return 1;
     }
 
-    @Autowired
-    private AccountService accountService;
-
     @TokenRequired
     @RequestMapping("/accountAll")
     public Object getAccountInfo(@RequestParam String accountId) {
@@ -355,6 +353,29 @@ public class CommonController {
         }
 
         return accountAllDTO;
+    }
+    /**
+     * 新增banner
+     */
+    @TokenRequired
+    @PostMapping("/banner")
+    public Object addBanner(@RequestBody BannerDTO bannerDTO){
+        Banner banner = new Banner();
+        banner.setImg(bannerDTO.getImg());
+        banner.setLink(bannerDTO.getLink());
+        banner.setDeleted(0);
+        bannerMapper.insert(banner);
+        return "success";
+    }
+
+    @TokenRequired
+    @PostMapping("/banner/stop")
+    public Object stopBanner(@RequestParam Integer id){
+        if(bannerMapper.banner(id)==null){
+            throw new BizException(ConstantUtil.BizExceptionCause.NO_BANNER);
+        }
+        bannerMapper.stopBanner(id);
+        return "success";
     }
 
 

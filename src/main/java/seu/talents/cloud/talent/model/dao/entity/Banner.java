@@ -11,4 +11,5 @@ public class Banner {
     Integer id;
     String img;
     String link;
+    int deleted;
 }
