@@ -264,6 +264,13 @@ public class AccountController {
         return null;
     }
 
+    @TokenRequired
+    @GetMapping("/accountId")
+    public Object getAccountId(){
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        return accountId;
+    }
+
 
 
 }
