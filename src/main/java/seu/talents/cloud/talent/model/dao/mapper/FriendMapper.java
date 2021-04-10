@@ -4,7 +4,11 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import seu.talents.cloud.talent.model.dao.entity.Friend;
+import seu.talents.cloud.talent.model.dto.post.FriendDTO;
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
+
 @Repository
 public interface FriendMapper extends Mapper<Friend> {
     @Insert("insert into friend\n" +
@@ -18,4 +22,43 @@ public interface FriendMapper extends Mapper<Friend> {
             "        where a.account_id = #{myAccountId}\n" +
             "          and a.friend_account_id = #{accountId}")
     Friend getRelationShip(String myAccountId,String accountId);
+
+    @Select("select b.accountId as friendAccountId,\n" +
+            "               b.name,\n" +
+            "               c.company,\n" +
+            "               c.position,\n" +
+            "               b.avatar,\n" +
+            "               b.city,\n" +
+            "               a.status,\n" +
+            "               b.collage\n" +
+            "        from friend a\n" +
+            "                 left join account b on a.friend_account_id = b.accountId\n" +
+            "                 left join (select max(j.accountId) as account_id_t, company, position\n" +
+            "                            from job j\n" +
+            "                            group by j.accountId) c on b.accountId = c.account_id_t\n" +
+            "\n" +
+            "        where a.account_id = '#{accountId}'\n" +
+            "          and a.status = 2\n" +
+            "        UNION\n" +
+            "        DISTINCT\n" +
+            "        select b.accountId as friendAccountId,\n" +
+            "               b.name,\n" +
+            "               c.company,\n" +
+            "               c.position,\n" +
+            "               b.avatar,\n" +
+            "               b.city,\n" +
+            "               (CASE a.status\n" +
+            "                    WHEN 0 THEN 0\n" +
+            "                    WHEN 1 THEN 3\n" +
+            "                    WHEN 2 THEN 2\n" +
+            "                   END)     as status,\n" +
+            "               b.collage\n" +
+            "        from friend a\n" +
+            "                 left join account b on a.friend_account_id = b.accountId\n" +
+            "                 left join (select max(j.accountId) as account_id_t, company, position\n" +
+            "                            from job j\n" +
+            "                            group by j.accountId) c on b.accountId = c.account_id_t\n" +
+            "        where a.friend_account_id = '#{accountId}'\n" +
+            "          and a.status = 2")
+    List<FriendDTO> getFriends(String accountId);
 }

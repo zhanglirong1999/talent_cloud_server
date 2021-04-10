@@ -18,10 +18,11 @@ import seu.talents.cloud.talent.common.annotation.TokenRequired;
 import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Account;
+import seu.talents.cloud.talent.model.dao.entity.Favorite;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
-import seu.talents.cloud.talent.model.dto.post.AdminDTO;
-import seu.talents.cloud.talent.model.dto.post.LoginDTO;
-import seu.talents.cloud.talent.model.dto.post.Register;
+import seu.talents.cloud.talent.model.dao.mapper.FavoriteMapper;
+import seu.talents.cloud.talent.model.dto.PageResult;
+import seu.talents.cloud.talent.model.dto.post.*;
 import seu.talents.cloud.talent.service.AccountService;
 import seu.talents.cloud.talent.util.ConstantUtil;
 import seu.talents.cloud.talent.util.RedisUtil;
@@ -29,6 +30,7 @@ import seu.talents.cloud.talent.util.TokenUtil;
 import seu.talents.cloud.talent.util.WXBizDataCryptUtil;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -37,7 +39,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.security.*;
 import java.security.spec.AlgorithmParameterSpec;
 import java.text.DateFormat;
@@ -63,6 +67,9 @@ public class AccountController {
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private FavoriteMapper favoriteMapper;
 
 
     String access_token = "";
@@ -214,28 +221,46 @@ public class AccountController {
         return token;
     }
 
-    @TokenRequired
-    @GetMapping("/decoded-phone")
-    public Object getPhoneNumber(@RequestParam String encryptedData,
-                                 @RequestParam String iv,
-                                 @RequestParam String js_code) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+  //  @TokenRequired
+    @PostMapping("/decoded-phone")
+    public Object getPhoneNumber(@RequestBody PhoneDTO phoneDTO) throws Exception {
+//        OkHttpClient client = new OkHttpClient();
+//        Request request = new Request.Builder().url("https://api.weixin.qq.com/sns/jscode2session?appid="+CONST.appId+"&secret="+CONST.appSecret+"&js_code="+phoneDTO.getJs_code()+"&grant_type=authorization_code").build();
+//        Call call = client.newCall(request);
+//        Response response = call.execute();
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        Map<String, Object> map = objectMapper.readValue(response.body().string(), new TypeReference<Map<String,Object>>(){});
+//        Map<String, Object> result = WXBizDataCryptUtil.decrypt((String)map.get("session_key"), phoneDTO.getEncryptedData(), phoneDTO.getIv());
+//        System.out.println(result);
+//        String phone = (String)result.get("purePhoneNumber");
+//        return phone;
+
         // 微信登陆，获取openid
         String wxApiUrl = "https://api.weixin.qq.com/sns/jscode2session?" +
                 "appid=" + CONST.appId +
                 "&secret=" + CONST.appSecret +
-                "&js_code=" + js_code +
+                "&js_code=" + phoneDTO.getJs_code() +
                 "&grant_type=authorization_code";
         String respronse = restTemplate.getForObject(wxApiUrl, String.class);
         Map res = new Gson().fromJson(respronse, Map.class);
         System.out.println(res);
 
         String session_key = (String) res.get("session_key");
-        // 被加密的数据
-        byte[] dataByte = Base64.getDecoder().decode(encryptedData);
-        // 加密秘钥
-        byte[] keyByte = Base64.getDecoder().decode(session_key);
-        // 偏移量
-        byte[] ivByte = Base64.getDecoder().decode(iv);
+//        // 被加密的数据
+//        org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
+//        byte[] dataByte = base64.decode(phoneDTO.getEncryptedData().getBytes());
+//        byte[] keyByte = base64.decode(session_key.getBytes());
+//        byte[] ivByte = base64.decode(phoneDTO.getIv().getBytes());
+
+
+//        String encryptedData = URLDecoder.decode(phoneDTO.getEncryptedData(),"UTF-8");
+//        String sessionKey = URLDecoder.decode(session_key,"UTF-8");
+//        String iv = URLDecoder.decode(phoneDTO.getIv(),"UTF-8");
+        byte[] dataByte = Base64.decode(phoneDTO.getEncryptedData());
+         //加密秘钥
+        byte[] keyByte = Base64.decode(session_key);
+         //偏移量
+        byte[] ivByte = Base64.decode(phoneDTO.getIv());
         try {
             // 如果密钥不足16位，那么就补足.  这个if 中的内容很重要
             int base = 16;
@@ -243,6 +268,7 @@ public class AccountController {
                 int groups = keyByte.length / base + (keyByte.length % base != 0 ? 1 : 0);
                 byte[] temp = new byte[groups * base];
                 Arrays.fill(temp, (byte) 0);
+                System.out.println(".............kk");
                 System.arraycopy(keyByte, 0, temp, 0, keyByte.length);
                 keyByte = temp;
             }
@@ -270,6 +296,11 @@ public class AccountController {
         String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
         return accountId;
     }
+
+
+
+
+
 
 
 

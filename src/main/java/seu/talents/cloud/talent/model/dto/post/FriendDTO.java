@@ -20,8 +20,7 @@ public class FriendDTO {
     private String avatar;
     private String city;
     private Long status;
-    private String school;
-    private String college;
+    private String collage;
     private String startTime;
 
     public void setStartTime(final String startTime){

@@ -17,10 +17,11 @@ public class FavoriteDTO {
     private Integer status;
     private String avatar;
     private String name;
-    private String college;
+    private String city;
+    private String collage;
     private String startTime;
     private String company;
-    private String job;
+    private String position;
 
     public void setStartTime(final String startTime){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");

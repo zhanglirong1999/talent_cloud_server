@@ -378,6 +378,27 @@ public class CommonController {
         return "success";
     }
 
+    @GetMapping("/favorite")
+    public Object getFavorite(@RequestParam int pageIndex,
+                              @RequestParam int filter
+    ) {
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        if(filter==1) {
+            Favorite favorite = new Favorite();
+            favorite.setAccountId(accountId);
+            favorite.setStatus(1);
+            PageHelper.startPage(pageIndex, 20);
+            List<FavoriteDTO> res = favoriteMapper.getFavoriteList(accountId, pageIndex);
+            return new PageResult<FavoriteDTO>(favoriteMapper.selectCount(favorite), res);
+        }else if(filter==0){
+            PageHelper.startPage(pageIndex, 20);
+            List<FriendDTO> friends = friendMapper.getFriends(accountId);
+            return new PageResult(((Page) friends).getTotal(), friends);
+        }else{
+            throw new BizException(ConstantUtil.BizExceptionCause.ERROR_FILTER);
+        }
+    }
+
 
 
 }
