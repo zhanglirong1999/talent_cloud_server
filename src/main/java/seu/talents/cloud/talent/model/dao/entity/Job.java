@@ -21,4 +21,5 @@ public class Job {
     Long endTime;
     Integer deleted;
     String position;
+    String industry;
 }

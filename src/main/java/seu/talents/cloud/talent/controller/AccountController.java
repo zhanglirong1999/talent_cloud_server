@@ -297,11 +297,46 @@ public class AccountController {
         return accountId;
     }
 
+    /**
+     * 修改用户信息
+     * @param modifyDTO
+     * @return
+     */
+    @TokenRequired
+    @PostMapping("/modify")
+    public Object modifyUser(@RequestBody ModifyDTO modifyDTO){
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        accountService.modifyUser(modifyDTO,accountId);
+        return "success";
+    }
 
+    /**
+     * 新增工作经历
+     * @param addJob
+     * @return
+     */
+    @TokenRequired
+    @PostMapping("/job")
+    public Object addJob(@RequestBody AddJob addJob){
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        accountService.addJob(addJob,accountId);
+        return "success";
+    }
 
+    @TokenRequired
+    @PostMapping("/job/modify")
+    public Object modifyJob(@RequestBody ModifyJobDTO modifyJobDTO){
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        accountService.modifyJob(modifyJobDTO,accountId);
+        return "success";
+    }
 
-
-
+    @TokenRequired
+    @DeleteMapping("/job")
+    public Object deleteJob(@RequestParam Long jobId){
+        accountService.deleteJob(jobId);
+        return "success";
+    }
 
 
 }

@@ -78,7 +78,7 @@ public class RecommendController {
      * @param rid
      * @return
      */
-    @TokenRequired
+  //  @TokenRequired
     @GetMapping("/detail")
     public Object getDetail(@RequestParam Long rid){
         return recommendService.getRecommendDetail(rid);

@@ -8,9 +8,7 @@ import seu.talents.cloud.talent.model.dao.entity.Account;
 import seu.talents.cloud.talent.model.dao.entity.Job;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
 import seu.talents.cloud.talent.model.dao.mapper.JobMapper;
-import seu.talents.cloud.talent.model.dto.post.AccountAllDTO;
-import seu.talents.cloud.talent.model.dto.post.AdminDTO;
-import seu.talents.cloud.talent.model.dto.post.Register;
+import seu.talents.cloud.talent.model.dto.post.*;
 import seu.talents.cloud.talent.model.dto.returnDTO.JobDTO;
 import seu.talents.cloud.talent.service.AccountService;
 import seu.talents.cloud.talent.util.ConstantUtil;
@@ -109,6 +107,72 @@ public class AccountServiceImpl implements AccountService {
                 .stream().map(JobDTO::new).collect(Collectors.toList()));
 
         return accountAllDTO;
+    }
+
+    @Override
+    public void modifyUser(ModifyDTO register, String accountId) {
+        Account account = new Account();
+        account.setAccountId(accountId);
+        if(accountMapper.selectByPrimaryKey(account)==null){
+            throw new BizException(ConstantUtil.BizExceptionCause.NOT_USER);
+        }
+        account.setName(register.getName());
+        account.setPhone(register.getPhone());
+        account.setCollage(register.getCollege());
+        account.setGradYear(register.getGradYear());
+        account.setGradDegree(register.getGradDegree());
+        account.setCompany(register.getCompany());
+        account.setJob(register.getJob());
+        account.setCanRecom(register.getCanRecom());
+        account.setGender(register.getGender());
+//        account.setAvatar(CONST.avatar);
+        account.setIndustry(register.getIndustry());
+        accountMapper.updateByPrimaryKeySelective(account);
+    }
+
+    @Override
+    public void addJob(AddJob addJob, String accountId) {
+        Long jobId = ConstantUtil.generateId();
+        Job job = new Job();
+        job.setAccountId(accountId);
+        job.setDeleted(0);
+        job.setJobId(jobId);
+        job.setCompany(addJob.getCompany());
+        job.setPosition(addJob.getJob());
+        job.setIndustry(addJob.getIndustry());
+        if(addJob.getStartTime()!=null) {
+            job.setStartTime(addJob.getStartTime().getTime());
+        }
+        if(addJob.getEndTime()!=null) {
+            job.setEndTime(addJob.getEndTime().getTime());
+        }
+        jobMapper.insert(job);
+    }
+
+    @Override
+    public void modifyJob(ModifyJobDTO modifyJobDTO, String accountId) {
+        Job job = jobMapper.selectByPrimaryKey(modifyJobDTO.getJobId());
+    //    job.setAccountId(accountId);
+    //    job.setDeleted(0);
+    //    job.setJobId(jobId);
+        job.setCompany(modifyJobDTO.getCompany());
+        job.setPosition(modifyJobDTO.getJob());
+        job.setIndustry(modifyJobDTO.getIndustry());
+        if(modifyJobDTO.getStartTime()!=null) {
+            job.setStartTime(modifyJobDTO.getStartTime().getTime());
+        }
+        if(modifyJobDTO.getEndTime()!=null) {
+            job.setEndTime(modifyJobDTO.getEndTime().getTime());
+        }
+        jobMapper.updateByPrimaryKeySelective(job);
+    }
+
+    @Override
+    public void deleteJob(Long jobId) {
+        Job job = jobMapper.selectByPrimaryKey(jobId);
+        job.setDeleted(1);
+        jobMapper.updateByPrimaryKeySelective(job);
+
     }
 
 
