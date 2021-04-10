@@ -12,6 +12,7 @@ public class JobDTO {
     private String position;
     private Long startTime;
     private Long endTime;
+    private String industry;
 
     public JobDTO() {
     }
