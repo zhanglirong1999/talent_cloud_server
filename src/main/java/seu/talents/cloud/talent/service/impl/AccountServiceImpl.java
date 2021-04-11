@@ -152,7 +152,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void modifyJob(ModifyJobDTO modifyJobDTO, String accountId) {
-        Job job = jobMapper.selectByPrimaryKey(modifyJobDTO.getJobId());
+//        Job job = jobMapper.selectByPrimaryKey(modifyJobDTO.getJobId());
+        Job job = jobMapper.getJob(modifyJobDTO.getJobId());
     //    job.setAccountId(accountId);
     //    job.setDeleted(0);
     //    job.setJobId(jobId);
@@ -165,7 +166,10 @@ public class AccountServiceImpl implements AccountService {
         if(modifyJobDTO.getEndTime()!=null) {
             job.setEndTime(modifyJobDTO.getEndTime().getTime());
         }
-        jobMapper.updateByPrimaryKeySelective(job);
+        Example example2 = new Example(Job.class);
+        example2.createCriteria().andEqualTo("jobId", modifyJobDTO.getJobId())
+               ;
+        jobMapper.updateByExample(job,example2);
     }
 
     @Override

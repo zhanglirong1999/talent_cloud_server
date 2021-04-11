@@ -332,7 +332,7 @@ public class AccountController {
     }
 
     @TokenRequired
-    @DeleteMapping("/job")
+    @PostMapping("/job/delete")
     public Object deleteJob(@RequestParam Long jobId){
         accountService.deleteJob(jobId);
         return "success";
