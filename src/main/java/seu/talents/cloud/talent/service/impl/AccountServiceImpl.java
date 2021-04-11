@@ -174,9 +174,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deleteJob(Long jobId) {
-        Job job = jobMapper.selectByPrimaryKey(jobId);
+        Job job = jobMapper.getJob(jobId);
         job.setDeleted(1);
-        jobMapper.updateByPrimaryKeySelective(job);
+        Example example2 = new Example(Job.class);
+        example2.createCriteria().andEqualTo("jobId", jobId)
+        ;
+        jobMapper.updateByExample(job,example2);
 
     }
 
