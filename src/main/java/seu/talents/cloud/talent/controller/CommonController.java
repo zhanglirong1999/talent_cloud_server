@@ -267,7 +267,7 @@ public class CommonController {
         B2A.setAccountId(friendApplyDTO.getFriendAccountId());
         B2A.setFriendAccountId(accountId);
         B2A.setStatus(FriendStatus.todo.getStatus());
-        friendMapper.insertOnDuplicateKeyUpdate(B2A.getFriendAccountId(),B2A.getAccountId(),B2A.getStatus());
+        friendMapper.insertOnDuplicateKeyUpdate(B2A.getAccountId(),B2A.getFriendAccountId(),B2A.getStatus());
 
         //发消息
         messageService.newMessage(accountId, friendApplyDTO.getFriendAccountId(),
