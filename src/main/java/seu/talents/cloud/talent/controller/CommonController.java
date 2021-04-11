@@ -378,6 +378,7 @@ public class CommonController {
         return "success";
     }
 
+    @TokenRequired
     @GetMapping("/favorite")
     public Object getFavorite(@RequestParam int pageIndex,
                               @RequestParam int filter

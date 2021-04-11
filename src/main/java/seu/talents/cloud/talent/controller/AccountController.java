@@ -166,7 +166,7 @@ public class AccountController {
     public Object getToken(){
 //        String accountId= UUID.randomUUID().toString();
 //        String accountId ="17a189a9-6db8-4338-86b6-27e15f752a2a";
-        String accountId = "3d008aa1-681e-4100-9aaa-9cce15ac2bec";
+        String accountId = "80c98d21-4a7f-4491-8206-cde068d3162d";
         String token = TokenUtil.createToken(accountId);
         System.out.println(token);
         return token;

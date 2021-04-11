@@ -21,7 +21,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public boolean checkoutJobDTOSecurity(JobDTO obDTO) {
         return  checkoutText(obDTO.getCompany()) &&
-                checkoutText(obDTO.getPosition());
+                checkoutText(obDTO.getJob());
     }
 
     /**

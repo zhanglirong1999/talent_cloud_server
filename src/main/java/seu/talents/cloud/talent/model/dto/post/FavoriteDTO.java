@@ -21,7 +21,7 @@ public class FavoriteDTO {
     private String college;
     private String startTime;
     private String company;
-    private String position;
+    private String job;
 
     public void setStartTime(final String startTime){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");

@@ -18,13 +18,13 @@ public interface FavoriteMapper extends Mapper<Favorite> {
             "               b.city,\n" +
             "               b.college,\n" +
             "               t2.company,\n" +
-            "               t2.position\n" +
+            "               t2.job\n" +
             "        from favorite a\n" +
             "                 left join account b on a.favorite_account_id = b.accountId\n" +
-            "                 left join (select max(j.accountId) as account_id_t1, company, position\n" +
+            "                 left join (select max(j.accountId) as account_id_t1, company, job\n" +
             "                            from job j\n" +
             "                            group by j.accountId) as t2 on a.favorite_account_id = t2.account_id_t1\n" +
-            "        where a.account_id = '#{accountId}'\n" +
+            "        where a.account_id = #{accountId}\n" +
             "          and a.status = 1")
     List<FavoriteDTO> getFavoriteList(String accountId, Integer pageIndex);
 }

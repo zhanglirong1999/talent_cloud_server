@@ -20,6 +20,6 @@ public class Job {
     @Column(name = "endTime")
     Long endTime;
     Integer deleted;
-    String position;
+    String job;
     String industry;
 }

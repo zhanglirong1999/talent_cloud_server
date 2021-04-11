@@ -16,7 +16,7 @@ public class FriendDTO {
     private String friendAccountId;
     private String name;
     private String company;
-    private String position;
+    private String job;
     private String avatar;
     private String city;
     private Long status;

@@ -139,7 +139,7 @@ public class AccountServiceImpl implements AccountService {
         job.setDeleted(0);
         job.setJobId(jobId);
         job.setCompany(addJob.getCompany());
-        job.setPosition(addJob.getJob());
+        job.setJob(addJob.getJob());
         job.setIndustry(addJob.getIndustry());
         if(addJob.getStartTime()!=null) {
             job.setStartTime(addJob.getStartTime().getTime());
@@ -157,7 +157,7 @@ public class AccountServiceImpl implements AccountService {
     //    job.setDeleted(0);
     //    job.setJobId(jobId);
         job.setCompany(modifyJobDTO.getCompany());
-        job.setPosition(modifyJobDTO.getJob());
+        job.setJob(modifyJobDTO.getJob());
         job.setIndustry(modifyJobDTO.getIndustry());
         if(modifyJobDTO.getStartTime()!=null) {
             job.setStartTime(modifyJobDTO.getStartTime().getTime());

@@ -9,7 +9,7 @@ public class JobDTO {
     private String accountId;
     private Long jobId;
     private String company;
-    private String position;
+    private String job;
     private Long startTime;
     private Long endTime;
     private String industry;

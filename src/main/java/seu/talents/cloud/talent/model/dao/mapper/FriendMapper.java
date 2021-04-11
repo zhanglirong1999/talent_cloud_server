@@ -13,7 +13,7 @@ import java.util.List;
 public interface FriendMapper extends Mapper<Friend> {
     @Insert("insert into friend\n" +
             "            (account_id, friend_account_id, status)\n" +
-            "        values ('#{accountId}', '#{friendAccountId}', #{status})\n" +
+            "        values (#{accountId}, #{friendAccountId}, #{status})\n" +
             "        ON DUPLICATE KEY UPDATE status= #{status}")
     int insertOnDuplicateKeyUpdate(String accountId,String friendAccountId,Integer status);
 
@@ -26,25 +26,25 @@ public interface FriendMapper extends Mapper<Friend> {
     @Select("select b.accountId as friendAccountId,\n" +
             "               b.name,\n" +
             "               c.company,\n" +
-            "               c.position,\n" +
+            "               c.job,\n" +
             "               b.avatar,\n" +
             "               b.city,\n" +
             "               a.status,\n" +
             "               b.college\n" +
             "        from friend a\n" +
             "                 left join account b on a.friend_account_id = b.accountId\n" +
-            "                 left join (select max(j.accountId) as account_id_t, company, position\n" +
+            "                 left join (select max(j.accountId) as account_id_t, company, job\n" +
             "                            from job j\n" +
             "                            group by j.accountId) c on b.accountId = c.account_id_t\n" +
             "\n" +
-            "        where a.account_id = '#{accountId}'\n" +
+            "        where a.account_id = #{accountId}\n" +
             "          and a.status = 2\n" +
             "        UNION\n" +
             "        DISTINCT\n" +
             "        select b.accountId as friendAccountId,\n" +
             "               b.name,\n" +
             "               c.company,\n" +
-            "               c.position,\n" +
+            "               c.job,\n" +
             "               b.avatar,\n" +
             "               b.city,\n" +
             "               (CASE a.status\n" +
@@ -55,10 +55,10 @@ public interface FriendMapper extends Mapper<Friend> {
             "               b.college\n" +
             "        from friend a\n" +
             "                 left join account b on a.friend_account_id = b.accountId\n" +
-            "                 left join (select max(j.accountId) as account_id_t, company, position\n" +
+            "                 left join (select max(j.accountId) as account_id_t, company, job\n" +
             "                            from job j\n" +
             "                            group by j.accountId) c on b.accountId = c.account_id_t\n" +
-            "        where a.friend_account_id = '#{accountId}'\n" +
+            "        where a.friend_account_id = #{accountId}\n" +
             "          and a.status = 2")
     List<FriendDTO> getFriends(String accountId);
 }
