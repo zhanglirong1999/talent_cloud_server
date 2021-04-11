@@ -18,7 +18,7 @@ public class FavoriteDTO {
     private String avatar;
     private String name;
     private String city;
-    private String collage;
+    private String college;
     private String startTime;
     private String company;
     private String position;

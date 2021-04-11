@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class ModifyDTO extends Register{
     Integer gender;
+    String city;
 }

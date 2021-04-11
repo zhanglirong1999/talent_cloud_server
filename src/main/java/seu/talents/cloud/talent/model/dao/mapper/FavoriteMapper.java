@@ -16,7 +16,7 @@ public interface FavoriteMapper extends Mapper<Favorite> {
             "               b.avatar,\n" +
             "               b.name,\n" +
             "               b.city,\n" +
-            "               b.collage,\n" +
+            "               b.college,\n" +
             "               t2.company,\n" +
             "               t2.position\n" +
             "        from favorite a\n" +

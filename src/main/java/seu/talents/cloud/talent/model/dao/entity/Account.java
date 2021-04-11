@@ -19,7 +19,7 @@ public class Account {
     private String unionId;
     private String name;
     private String avatar;
-    private String collage;
+    private String college;
     @Column(name = "gradYear")
     private String gradYear;
     private String phone;

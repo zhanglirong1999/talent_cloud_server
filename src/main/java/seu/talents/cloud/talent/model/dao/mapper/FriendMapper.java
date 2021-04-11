@@ -30,7 +30,7 @@ public interface FriendMapper extends Mapper<Friend> {
             "               b.avatar,\n" +
             "               b.city,\n" +
             "               a.status,\n" +
-            "               b.collage\n" +
+            "               b.college\n" +
             "        from friend a\n" +
             "                 left join account b on a.friend_account_id = b.accountId\n" +
             "                 left join (select max(j.accountId) as account_id_t, company, position\n" +
@@ -52,7 +52,7 @@ public interface FriendMapper extends Mapper<Friend> {
             "                    WHEN 1 THEN 3\n" +
             "                    WHEN 2 THEN 2\n" +
             "                   END)     as status,\n" +
-            "               b.collage\n" +
+            "               b.college\n" +
             "        from friend a\n" +
             "                 left join account b on a.friend_account_id = b.accountId\n" +
             "                 left join (select max(j.accountId) as account_id_t, company, position\n" +

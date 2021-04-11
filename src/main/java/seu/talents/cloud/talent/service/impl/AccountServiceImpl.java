@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
         }
         account.setName(register.getName());
         account.setPhone(register.getPhone());
-        account.setCollage(register.getCollege());
+        account.setCollege(register.getCollege());
         account.setGradYear(register.getGradYear());
         account.setGradDegree(register.getGradDegree());
         account.setCompany(register.getCompany());
@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
         map.put("gradYear",account.getGradYear());
         map.put("company",account.getCompany());
         map.put("job",account.getJob());
-        map.put("college",account.getCollage());
+        map.put("college",account.getCollege());
         return map;
     }
 
@@ -118,13 +118,14 @@ public class AccountServiceImpl implements AccountService {
         }
         account.setName(register.getName());
         account.setPhone(register.getPhone());
-        account.setCollage(register.getCollege());
+        account.setCollege(register.getCollege());
         account.setGradYear(register.getGradYear());
         account.setGradDegree(register.getGradDegree());
         account.setCompany(register.getCompany());
         account.setJob(register.getJob());
         account.setCanRecom(register.getCanRecom());
         account.setGender(register.getGender());
+        account.setCity(register.getCity());
 //        account.setAvatar(CONST.avatar);
         account.setIndustry(register.getIndustry());
         accountMapper.updateByPrimaryKeySelective(account);

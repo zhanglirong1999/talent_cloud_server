@@ -107,7 +107,7 @@ public class RecommendServiceImpl implements RecommendService {
             map.put("account",accountMapper.getName(recommend.getAid()));
             map.put("img",recommendPictureMapper.getUrl(recommend.getRid()));
             map.put("gap",accountMapper.getGradYear(recommend.getAid()));
-            map.put("college",accountMapper.getCollage(recommend.getAid()));
+            map.put("college",accountMapper.getcollege(recommend.getAid()));
             map.put("unit",recommend.getUnit());
             map.put("type",recommend.getType());
             map.put("pageCount",count);
@@ -148,7 +148,7 @@ public class RecommendServiceImpl implements RecommendService {
         map.put("companyCity",company.getCity());
         Account account = accountMapper.getAccount(recommend.getAid());
         map.put("gradYear",account.getGradYear());
-        map.put("college",account.getCollage());
+        map.put("college",account.getCollege());
         map.put("accountCompany",account.getCompany());
         map.put("avatar",account.getAvatar());
         map.put("experience",0);
