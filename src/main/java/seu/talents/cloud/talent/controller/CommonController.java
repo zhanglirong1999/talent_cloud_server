@@ -267,7 +267,7 @@ public class CommonController {
         B2A.setAccountId(friendApplyDTO.getFriendAccountId());
         B2A.setFriendAccountId(accountId);
         B2A.setStatus(FriendStatus.todo.getStatus());
-        friendMapper.insertOnDuplicateKeyUpdate(A2B.getAccountId(),A2B.getFriendAccountId(),A2B.getStatus());
+        friendMapper.insertOnDuplicateKeyUpdate(A2B.getFriendAccountId(),A2B.getAccountId(),A2B.getStatus());
 
         //发消息
         messageService.newMessage(accountId, friendApplyDTO.getFriendAccountId(),
@@ -335,6 +335,7 @@ public class CommonController {
             // 获取两人关系
             Friend relationShip = friendMapper.getRelationShip(myAccountId, accountId);
             if (relationShip != null) {
+                System.out.println("relationShip"+relationShip.getStatus());
                 accountAllDTO.setRelationShip(relationShip.getStatus());
                 if (relationShip.getStatus() != FriendStatus.friend.getStatus()) {
 //                    accountAllDTO.getAccount().setBirthday(null);
