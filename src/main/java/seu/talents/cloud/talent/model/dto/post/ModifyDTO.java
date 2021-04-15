@@ -6,4 +6,5 @@ import lombok.Data;
 public class ModifyDTO extends Register{
     Integer gender;
     String city;
+    String avatar;
 }

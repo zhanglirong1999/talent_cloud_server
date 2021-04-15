@@ -126,7 +126,11 @@ public class AccountServiceImpl implements AccountService {
         account.setCanRecom(register.getCanRecom());
         account.setGender(register.getGender());
         account.setCity(register.getCity());
-//        account.setAvatar(CONST.avatar);
+        String avatar = register.getAvatar();
+        if(avatar==null||avatar.equals("")){
+            avatar = CONST.avatar;
+        }
+        account.setAvatar(avatar);
         account.setIndustry(register.getIndustry());
         accountMapper.updateByPrimaryKeySelective(account);
     }
