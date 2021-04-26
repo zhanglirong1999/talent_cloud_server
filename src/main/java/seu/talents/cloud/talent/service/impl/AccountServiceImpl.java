@@ -43,7 +43,12 @@ public class AccountServiceImpl implements AccountService {
         account.setCompany(register.getCompany());
         account.setJob(register.getJob());
         account.setCanRecom(register.getCanRecom());
+        if(register.getAvatar().equals("")){
         account.setAvatar(CONST.avatar);
+        } else
+        {
+            account.setAvatar(register.getAvatar());
+        }
         account.setIndustry(register.getIndustry());
         accountMapper.updateByPrimaryKeySelective(account);
     }

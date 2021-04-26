@@ -17,5 +17,6 @@ public class Register {
     String job;
     String canRecom;
     String industry;
+    String avatar;
 
 }
