@@ -26,4 +26,5 @@ public class Company {
     String city;
     @Column(name = "passRate")
     String passRate;
+    Integer alumni;
 }

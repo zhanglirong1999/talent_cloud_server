@@ -37,6 +37,7 @@ public class CompanyServiceImpl implements CompanyService {
         company.setCity(companyDTO.getCity());
         company.setPassRate(companyDTO.getPassRate());
         company.setDeleted(0);
+        company.setAlumni(companyDTO.getAlumni());  //企业/校友企业
         companyMapper.insert(company);
     }
 
@@ -115,11 +116,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Object getCompanyList(String key, Integer pageIndex) {
+    public Object getCompanyList(String key, Integer pageIndex,Integer alumni) {
         List<Map<String,Object>> list = new LinkedList<>();
         Integer count = companyMapper.getCompanyCount1();
         if(key.equals("0")) {
-            Iterator<Company> iterator = companyMapper.getCompanyListByHeat(pageIndex).iterator();
+            Iterator<Company> iterator = companyMapper.getCompanyListByHeat(pageIndex,alumni).iterator();
             while (iterator.hasNext()){
                 Map<String,Object> map = new HashMap<>();
                 Company company = iterator.next();
@@ -142,7 +143,7 @@ public class CompanyServiceImpl implements CompanyService {
             }
 
         } else {
-            Iterator<Company> iterator = companyMapper.getCompanyListByCount(pageIndex).iterator();
+            Iterator<Company> iterator = companyMapper.getCompanyListByCount(pageIndex,alumni).iterator();
             while (iterator.hasNext()){
                 Map<String,Object> map = new HashMap<>();
                 Company company = iterator.next();

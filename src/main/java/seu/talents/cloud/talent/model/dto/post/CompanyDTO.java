@@ -14,5 +14,5 @@ public class CompanyDTO {
     String takeCount;
     String city;
     String passRate;
-
+    Integer alumni;
 }

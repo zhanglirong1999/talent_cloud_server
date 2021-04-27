@@ -83,8 +83,9 @@ public class CompanyController {
      */
     @TokenRequired
     @GetMapping("/list")
-    public Object getCompanyList(@RequestParam Integer pageIndex,@RequestParam String filter){
-        return companyService.getCompanyList(filter, pageIndex);
+    public Object getCompanyList(@RequestParam Integer pageIndex,@RequestParam String filter,
+                                 @RequestParam Integer alumni){
+        return companyService.getCompanyList(filter, pageIndex,alumni);
     }
 
     /**
