@@ -43,8 +43,8 @@ public interface AccountMapper extends Mapper<Account> {
     List<Map<String,Object>> getListByCollege(String accountId,Integer page);
 
     @Select("select b.accountId,b.avatar,b.name,b.city,b.college as college,b.gradYear,b.gradDegree,b.company,b.job\n" +
-            "from talentCloud.account b inner join talentCloud.account a on b.company=a.company or b.job=a.job or b.gradYear=a.gradYear" +
-            " and a.accountId='${accountId}'\n" +
+            "from talentCloud.account b inner join talentCloud.account a on (a.accountId = '${accountId}' and (b.company=a.company or b.job=a.job or b.gradYear=a.gradYear))\n" +
+            "where b.accountId != '${accountId}'\n" +
             "limit ${page},20")
     List<Map<String,Object>> getListByMaybe(String accountId,Integer page);
 
