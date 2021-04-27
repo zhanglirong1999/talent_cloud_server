@@ -27,7 +27,7 @@ public interface CompanyMapper extends Mapper<Company> {
     @Select("select * from company where deleted=0 and alumni=#{alumni} order by heat+0 desc limit ${pageIndex},20")
     List<Company> getCompanyListByHeat(@Param("pageIndex") Integer pageIndex,@Param("alumni") Integer alumni);
 
-    @Select("select * from company where deleted=0 alumni=#{alumni} order by count desc limit ${pageIndex},20")
+    @Select("select * from company where deleted=0 and alumni=#{alumni} order by count desc limit ${pageIndex},20")
     List<Company> getCompanyListByCount(@Param("pageIndex") Integer pageIndex,@Param("alumni") Integer alumni);
 
     @Select("select cid,name from company where deleted=0")
