@@ -13,4 +13,4 @@ pid=$(netstat -nlp | grep :$port | awk '{print $7}' | awk -F"/" '{ print $1 }');
 if [  -n  "$pid"  ];  then
     kill  -9  "$pid";
 fi
-nohup java -jar target/talent-0.0.1-SNAPSHOT.jar &
+nohup java -jar target/talent-0.0.1-SNAPSHOT.jar --spring.profiles.active=prd &
