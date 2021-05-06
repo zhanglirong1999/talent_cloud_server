@@ -155,6 +155,17 @@ public class AccountServiceImpl implements AccountService {
         account.setAvatar(avatar);
         account.setIndustry(register.getIndustry());
         accountMapper.updateByPrimaryKeySelective(account);
+
+        //加入工作表
+        Long jobId = ConstantUtil.generateId();
+        Job job = new Job();
+        job.setAccountId(accountId);
+        job.setDeleted(0);
+        job.setJobId(jobId);
+        job.setCompany(register.getCompany());
+        job.setJob(register.getJob());
+        job.setIndustry(register.getIndustry());
+        jobMapper.insert(job);
     }
 
     @Override
