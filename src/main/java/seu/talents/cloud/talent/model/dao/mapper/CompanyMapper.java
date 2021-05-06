@@ -36,6 +36,9 @@ public interface CompanyMapper extends Mapper<Company> {
     @Select("select cid from company where name='${name}'")
     String getCompanyId(String name);
 
+    @Select("select name from company where cid=${cid}")
+    String getCompanyName(Long cid);
+
     @Select("select count(*) from company where name='${name}'")
     Integer getCompanyCount(String name);
 
@@ -44,4 +47,5 @@ public interface CompanyMapper extends Mapper<Company> {
 
     @Select("select count(*) from recommend where company='${name}'")
     Integer getRecommendCount(String name);
+
 }

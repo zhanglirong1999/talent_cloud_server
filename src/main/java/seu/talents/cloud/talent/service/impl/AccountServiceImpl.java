@@ -7,6 +7,7 @@ import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Account;
 import seu.talents.cloud.talent.model.dao.entity.Job;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
+import seu.talents.cloud.talent.model.dao.mapper.CompanyMapper;
 import seu.talents.cloud.talent.model.dao.mapper.JobMapper;
 import seu.talents.cloud.talent.model.dto.post.*;
 import seu.talents.cloud.talent.model.dto.returnDTO.JobDTO;
@@ -28,6 +29,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private JobMapper jobMapper;
 
+    @Autowired
+    private CompanyMapper companyMapper;
+
     @Override
     public void registerUser(Register register,String accountId) {
         Account account = new Account();
@@ -40,6 +44,7 @@ public class AccountServiceImpl implements AccountService {
         account.setCollege(register.getCollege());
         account.setGradYear(register.getGradYear());
         account.setGradDegree(register.getGradDegree());
+//        String companyId = companyMapper.getCompanyId(register.getCompany());
         account.setCompany(register.getCompany());
         account.setJob(register.getJob());
         account.setCanRecom(register.getCanRecom());
@@ -51,6 +56,18 @@ public class AccountServiceImpl implements AccountService {
         }
         account.setIndustry(register.getIndustry());
         accountMapper.updateByPrimaryKeySelective(account);
+
+        //加入工作表
+        Long jobId = ConstantUtil.generateId();
+        Job job = new Job();
+        job.setAccountId(accountId);
+        job.setDeleted(0);
+        job.setJobId(jobId);
+        job.setCompany(register.getCompany());
+        job.setJob(register.getJob());
+        job.setIndustry(register.getIndustry());
+        jobMapper.insert(job);
+
     }
 
     @Override

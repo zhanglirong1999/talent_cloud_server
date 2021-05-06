@@ -38,6 +38,16 @@ public interface AccountMapper extends Mapper<Account> {
     List<Map<String,Object>> getListByCity(String accountId,Integer page);
 
     @Select("select b.accountId,b.avatar,b.name,b.city,b.college as college,b.gradYear,b.gradDegree,b.company,b.job\n" +
+            "from talentCloud.account b inner join talentCloud.account a on b.gradYear = a.gradYear and a.accountId='${accountId}'\n" +
+            "limit ${page},20")
+    List<Map<String,Object>> getListByGradYear(String accountId,Integer page);
+
+    @Select("select b.accountId,b.avatar,b.name,b.city,b.college as college,b.gradYear,b.gradDegree,b.company,b.job\n" +
+            "from talentCloud.account b inner join talentCloud.account a on b.company = a.company and a.accountId='${accountId}'\n" +
+            "limit ${page},20")
+    List<Map<String,Object>> getListByCompany(String accountId,Integer page);
+
+    @Select("select b.accountId,b.avatar,b.name,b.city,b.college as college,b.gradYear,b.gradDegree,b.company,b.job\n" +
             "from talentCloud.account b inner join talentCloud.account a on b.college = a.college and a.accountId='${accountId}'\n" +
             "limit ${page},20")
     List<Map<String,Object>> getListByCollege(String accountId,Integer page);

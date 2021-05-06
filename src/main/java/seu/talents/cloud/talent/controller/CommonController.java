@@ -146,6 +146,10 @@ public class CommonController {
             return accountMapper.getListByCity(accountId,pageIndex);
         }else if(filter==2){
             return accountMapper.getListByMaybe(accountId,pageIndex);
+        }else if(filter==3){
+            return accountMapper.getListByGradYear(accountId,pageIndex);
+        }else if(filter==4){
+            return accountMapper.getListByCompany(accountId,pageIndex);
         }else {
             return accountMapper.getListByDaShi(pageIndex);
         }

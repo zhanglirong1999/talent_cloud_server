@@ -37,5 +37,9 @@ public class Account {
     @Column(name = "isDaShi")
     private Integer isDaShi;
     private String industry;
+    @Column(name = "start_time")
+    private String startTime;
+    @Column(name = "login_time")
+    private String loginTime;
 
 }
