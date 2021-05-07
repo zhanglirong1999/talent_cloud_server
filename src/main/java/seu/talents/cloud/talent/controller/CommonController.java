@@ -16,12 +16,14 @@ import seu.talents.cloud.talent.model.dao.mapper.*;
 import seu.talents.cloud.talent.model.dto.PageResult;
 import seu.talents.cloud.talent.model.dto.post.*;
 import seu.talents.cloud.talent.model.dto.returnDTO.JobDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.SearchResultDTO;
 import seu.talents.cloud.talent.service.*;
 import seu.talents.cloud.talent.util.ConstantUtil;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -156,15 +158,66 @@ public class CommonController {
 
     }
 
-    @TokenRequired
+//    @TokenRequired
+//    @RequestMapping("/query")
+//    public Object query(@RequestParam String keyword,
+//
+//                             @RequestParam int pageIndex) {
+//            return v2ApiMapper.searchByName(keyword,pageIndex);
+//    }
+
     @RequestMapping("/query")
-    public Object query(@RequestParam String keyword,
-
+    public Object query(@RequestParam String content,
+                             @RequestParam String type,
+                             @RequestParam int pageSize,
                              @RequestParam int pageIndex) {
+        List<SearchResultDTO> res = new ArrayList<SearchResultDTO>();
 
-            return v2ApiMapper.searchByName(keyword,pageIndex);
+        if (type.equals("") || type == null || type.equals(SearchType.name.getValue())) {
+            PageHelper.startPage(pageIndex, pageSize);
+            List<BriefInfo> temp = v2ApiMapper.searchByName(content);
+            res.add(new SearchResultDTO(
+                    ((Page) temp).getTotal(),
+                    SearchType.name,
+                    temp));
+        }
 
+        if (type.equals("") || type == null || type.equals(SearchType.city.getValue())) {
+            PageHelper.startPage(pageIndex, pageSize);
+            List<BriefInfo> temp = v2ApiMapper.searchByCity(content);
+            res.add(new SearchResultDTO(
+                    ((Page) temp).getTotal(),
+                    SearchType.city,
+                    temp));
+        }
+        if (type.equals("") || type == null || type.equals(SearchType.company.getValue())) {
+            PageHelper.startPage(pageIndex, pageSize);
+            List<BriefInfo> temp = v2ApiMapper.searchByCompany(content);
+            res.add(new SearchResultDTO(
+                    ((Page) temp).getTotal(),
+                    SearchType.company,
+                    temp));
+        }
+        if (type.equals("") || type == null || type.equals(SearchType.position.getValue())) {
+            PageHelper.startPage(pageIndex, pageSize);
+            List<BriefInfo> temp = v2ApiMapper.searchByPosition(content);
+            res.add(new SearchResultDTO(
+                    ((Page) temp).getTotal(),
+                    SearchType.position,
+                    temp));
+        }
+
+        if (type.equals("") || type == null || type.equals(SearchType.college.getValue())) {
+            PageHelper.startPage(pageIndex, pageSize);
+            List<BriefInfo> temp = v2ApiMapper.searchByCollege(content);
+            res.add(new SearchResultDTO(
+                    ((Page) temp).getTotal(),
+                    SearchType.college,
+                    temp));
+        }
+        return res;
     }
+
 
 
     @TokenRequired

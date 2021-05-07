@@ -6,8 +6,9 @@ public enum SearchType {
      *
      */
     name("name", "姓名"),
+    city("city", "城市"),
     company("company", "公司"),
-    job("job", "职位"),
+    position("position", "职位"),
     college("college", "学院");
 
     private String value;

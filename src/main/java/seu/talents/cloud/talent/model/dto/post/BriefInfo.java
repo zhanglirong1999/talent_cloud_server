@@ -15,6 +15,7 @@ public class BriefInfo {
     private String college;
     private String gradYear;
     private String startTime;
+    private String school;
 
     private String recommondReason;
 
