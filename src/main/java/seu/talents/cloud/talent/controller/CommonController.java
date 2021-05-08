@@ -152,7 +152,9 @@ public class CommonController {
             return accountMapper.getListByGradYear(accountId,pageIndex);
         }else if(filter==4){
             return accountMapper.getListByCompany(accountId,pageIndex);
-        }else {
+        }else if(filter==5) {
+            return accountMapper.getListByJob(accountId,pageIndex);
+        }else  {
             return accountMapper.getListByDaShi(pageIndex);
         }
 
@@ -167,15 +169,14 @@ public class CommonController {
 //    }
 
     @RequestMapping("/query")
-    public Object query(@RequestParam String content,
+    public Object query(@RequestParam String keyword,
                              @RequestParam String type,
-                             @RequestParam int pageSize,
                              @RequestParam int pageIndex) {
         List<SearchResultDTO> res = new ArrayList<SearchResultDTO>();
-
+        int pageSize =20;
         if (type.equals("") || type == null || type.equals(SearchType.name.getValue())) {
             PageHelper.startPage(pageIndex, pageSize);
-            List<BriefInfo> temp = v2ApiMapper.searchByName(content);
+            List<BriefInfo> temp = v2ApiMapper.searchByName(keyword);
             res.add(new SearchResultDTO(
                     ((Page) temp).getTotal(),
                     SearchType.name,
@@ -184,7 +185,7 @@ public class CommonController {
 
         if (type.equals("") || type == null || type.equals(SearchType.city.getValue())) {
             PageHelper.startPage(pageIndex, pageSize);
-            List<BriefInfo> temp = v2ApiMapper.searchByCity(content);
+            List<BriefInfo> temp = v2ApiMapper.searchByCity(keyword);
             res.add(new SearchResultDTO(
                     ((Page) temp).getTotal(),
                     SearchType.city,
@@ -192,7 +193,7 @@ public class CommonController {
         }
         if (type.equals("") || type == null || type.equals(SearchType.company.getValue())) {
             PageHelper.startPage(pageIndex, pageSize);
-            List<BriefInfo> temp = v2ApiMapper.searchByCompany(content);
+            List<BriefInfo> temp = v2ApiMapper.searchByCompany(keyword);
             res.add(new SearchResultDTO(
                     ((Page) temp).getTotal(),
                     SearchType.company,
@@ -200,7 +201,7 @@ public class CommonController {
         }
         if (type.equals("") || type == null || type.equals(SearchType.position.getValue())) {
             PageHelper.startPage(pageIndex, pageSize);
-            List<BriefInfo> temp = v2ApiMapper.searchByPosition(content);
+            List<BriefInfo> temp = v2ApiMapper.searchByPosition(keyword);
             res.add(new SearchResultDTO(
                     ((Page) temp).getTotal(),
                     SearchType.position,
@@ -209,7 +210,7 @@ public class CommonController {
 
         if (type.equals("") || type == null || type.equals(SearchType.college.getValue())) {
             PageHelper.startPage(pageIndex, pageSize);
-            List<BriefInfo> temp = v2ApiMapper.searchByCollege(content);
+            List<BriefInfo> temp = v2ApiMapper.searchByCollege(keyword);
             res.add(new SearchResultDTO(
                     ((Page) temp).getTotal(),
                     SearchType.college,
