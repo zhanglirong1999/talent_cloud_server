@@ -57,7 +57,7 @@ public class SubscribeMessageServiceImpl implements SubscribeMessageService {
 
             //根据用户的id查表获得openid
             subscribeMessage.setTouser(accountMapper.getAccount(id).getOpenId());//用户的openid（要发送给哪个用户）
-            subscribeMessage.setTemplate_id("b4KhLPwI1zJIq5KmZ0IzCV_TD9nS3CS3MEzjf8i0McA");//订阅消息模板id
+            subscribeMessage.setTemplate_id("ggl-pzSSbHZ0pcLwIs4OnuNQe8O_LcEHtmRaENb4_8w");//订阅消息模板id
             subscribeMessage.setPage("pages/noticeList/noticeList");
 
             Map<String, TemplateData> m = new HashMap<>(3);
