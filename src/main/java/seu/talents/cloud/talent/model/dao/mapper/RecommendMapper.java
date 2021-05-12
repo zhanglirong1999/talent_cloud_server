@@ -23,6 +23,9 @@ public interface RecommendMapper extends Mapper<Recommend> {
     @Select("select * from recommend where company='${name}' limit ${page},20")
     List<Recommend> getRecommendAll(String name,Integer page);
 
+    @Select("select count(*) from recommend where company='${name}'")
+    Integer getRecommendCount(String name);
+
     @Select("SELECT count(*) FROM recommend WHERE type=${type}")
     Integer getRecommendListCount(Integer type);
 

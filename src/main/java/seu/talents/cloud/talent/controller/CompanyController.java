@@ -9,12 +9,13 @@ import seu.talents.cloud.talent.model.dao.entity.Recommend;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
 import seu.talents.cloud.talent.model.dao.mapper.CompanyMapper;
 import seu.talents.cloud.talent.model.dao.mapper.RecommendMapper;
+import seu.talents.cloud.talent.model.dao.mapper.RecommendPictureMapper;
 import seu.talents.cloud.talent.model.dto.post.CompanyDTO;
 import seu.talents.cloud.talent.model.dto.returnDTO.AccountDTO;
 import seu.talents.cloud.talent.model.dto.returnDTO.CompanyResDTO;
 import seu.talents.cloud.talent.service.CompanyService;
 
-import java.util.List;
+import java.util.*;
 
 @RequestMapping("/company")
 @RestController
@@ -32,6 +33,9 @@ public class CompanyController {
 
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private RecommendPictureMapper recommendPictureMapper;
 
     /**
      * 新增企业
@@ -81,8 +85,34 @@ public class CompanyController {
         String name = companyMapper.getCompanyName(cid);
         int count = accountMapper.getAccountCount(name);
         List<AccountDTO> accountDTOS = accountMapper.getCompanyAccount(name);
-        List<Recommend> recommends = recommendMapper.getRecommendFive(name);
-        CompanyResDTO res = new CompanyResDTO(count,company,recommends,accountDTOS);
+        Iterator<Recommend> recommends = recommendMapper.getRecommendFive(name).iterator();
+        List<Map<String,Object>> list = new LinkedList<>();
+        int counts = recommendMapper.getRecommendCount(name);
+        while(recommends.hasNext()){
+            Recommend recommend = recommends.next();
+            Map<String,Object> map = new HashMap<>();
+            map.put("rid",recommend.getRid());
+            map.put("name",recommend.getName());
+            map.put("salarymin",recommend.getSalarymin());
+            map.put("department",recommend.getDepartment());
+            map.put("degree",recommend.getDegree());
+            map.put("city",recommend.getCity());
+            map.put("tag",recommend.getTag());
+            map.put("company",recommend.getCompany());
+            map.put("salarymax",recommend.getSalarymax());
+            map.put("info",recommend.getInfo());
+            map.put("method",recommend.getMethod());
+            map.put("createTime",recommend.getCreateTime());
+            map.put("account",accountMapper.getName(recommend.getAid()));
+            map.put("img",recommendPictureMapper.getUrl(recommend.getRid()));
+            map.put("gap",accountMapper.getGradYear(recommend.getAid()));
+            map.put("college",accountMapper.getcollege(recommend.getAid()));
+            map.put("unit",recommend.getUnit());
+            map.put("type",recommend.getType());
+            map.put("pageCount",counts);
+            list.add(map);
+        }
+        CompanyResDTO res = new CompanyResDTO(count,company,list,accountDTOS);
         return  res;
     }
 
