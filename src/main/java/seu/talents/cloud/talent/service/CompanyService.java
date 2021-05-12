@@ -9,7 +9,7 @@ public interface CompanyService {
     void addCompany(CompanyDTO companyDTO);
     void deleteCompany(Long cid);
     void modifyCompany(Company company);
-    Object getCompanyInfo(Long cid) throws Exception;
+    Company getCompanyInfo(Long cid) throws Exception;
     Object getSearch(String keyword,Integer pageIndex);
     Object getCompanyList(String key, Integer pageIndex, Integer alumni);
     Object getNameList();

@@ -75,7 +75,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Object getCompanyInfo(Long cid) {
+    public Company getCompanyInfo(Long cid) {
         Company company2 = companyMapper.selectOneByExample(
                 Example.builder(Company.class).where(Sqls.custom().andEqualTo("cid",cid))
                         .build()

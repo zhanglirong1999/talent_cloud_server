@@ -17,6 +17,12 @@ public interface RecommendMapper extends Mapper<Recommend> {
     @Select("SELECT * FROM recommend WHERE type=${type} ORDER BY createTime DESC LIMIT ${pageIndex},20")
     List<Recommend> getRecommendList(Integer pageIndex,Integer type);
 
+    @Select("select * from recommend where company='${name}' limit 0,5")
+    List<Recommend> getRecommendFive(String name);
+
+    @Select("select * from recommend where company='${name}' limit ${page},20")
+    List<Recommend> getRecommendAll(String name,Integer page);
+
     @Select("SELECT count(*) FROM recommend WHERE type=${type}")
     Integer getRecommendListCount(Integer type);
 

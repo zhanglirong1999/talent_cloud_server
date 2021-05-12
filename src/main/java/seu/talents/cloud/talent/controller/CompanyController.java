@@ -5,8 +5,16 @@ import org.springframework.web.bind.annotation.*;
 import seu.talents.cloud.talent.common.annotation.TokenRequired;
 import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.model.dao.entity.Company;
+import seu.talents.cloud.talent.model.dao.entity.Recommend;
+import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
+import seu.talents.cloud.talent.model.dao.mapper.CompanyMapper;
+import seu.talents.cloud.talent.model.dao.mapper.RecommendMapper;
 import seu.talents.cloud.talent.model.dto.post.CompanyDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.AccountDTO;
+import seu.talents.cloud.talent.model.dto.returnDTO.CompanyResDTO;
 import seu.talents.cloud.talent.service.CompanyService;
+
+import java.util.List;
 
 @RequestMapping("/company")
 @RestController
@@ -15,6 +23,15 @@ import seu.talents.cloud.talent.service.CompanyService;
 public class CompanyController {
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private AccountMapper accountMapper;
+
+    @Autowired
+    private RecommendMapper recommendMapper;
+
+    @Autowired
+    private CompanyMapper companyMapper;
 
     /**
      * 新增企业
@@ -60,8 +77,43 @@ public class CompanyController {
     @TokenRequired
     @GetMapping("/info")
     public Object getCompanyInfo(@RequestParam Long cid) throws Exception {
-        return companyService.getCompanyInfo(cid);
+        Company company = companyService.getCompanyInfo(cid);
+        String name = companyMapper.getCompanyName(cid);
+        int count = accountMapper.getAccountCount(name);
+        List<AccountDTO> accountDTOS = accountMapper.getCompanyAccount(name);
+        List<Recommend> recommends = recommendMapper.getRecommendFive(name);
+        CompanyResDTO res = new CompanyResDTO(count,company,recommends,accountDTOS);
+        return  res;
     }
+
+    /**
+     * 获取公司校友全部列表
+     * @param cid
+     * @return
+     */
+    @TokenRequired
+    @GetMapping("/info/account")
+    public Object getCompanyAccountDetail(@RequestParam Long cid,
+                                          @RequestParam Integer pageIndex){
+        String name = companyMapper.getCompanyName(cid);
+        return accountMapper.getCompanyAccountAll(name,pageIndex);
+    }
+
+    /**
+     * 获取公司全部内推
+     * @param cid
+     * @param pageIndex
+     * @return
+     */
+    @TokenRequired
+    @GetMapping("/info/recommend")
+    public Object getCompanyRecommendDetail(@RequestParam Long cid,
+                                            @RequestParam Integer pageIndex){
+        String name = companyMapper.getCompanyName(cid);
+        return  recommendMapper.getRecommendAll(name,pageIndex);
+    }
+
+
 
     /**
      * 搜获企业

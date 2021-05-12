@@ -1,9 +1,11 @@
 package seu.talents.cloud.talent.model.dao.mapper;
 
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import seu.talents.cloud.talent.model.dao.entity.Account;
+import seu.talents.cloud.talent.model.dto.returnDTO.AccountDTO;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -67,6 +69,18 @@ public interface AccountMapper extends Mapper<Account> {
             "from talentCloud.account b where isDaShi=1\n" +
             "limit ${page},20")
     List<Map<String,Object>> getListByDaShi(Integer page);
+
+
+    @Select("select accountId,avatar,name,job,isDaShi from " +
+            "account where company='${name}' limit 0,5")
+    List<AccountDTO> getCompanyAccount(String name);
+
+    @Select("select accountId,avatar,name,job,isDaShi from " +
+            "account where company='${name}' limit ${pageIndex},20")
+    List<AccountDTO> getCompanyAccountAll(String name,Integer pageIndex);
+
+    @Select("select count(*) from talentCloud.account where company='${name}'")
+    Integer getAccountCount(String name);
 
 
 
