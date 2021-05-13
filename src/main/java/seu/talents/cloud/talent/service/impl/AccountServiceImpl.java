@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import seu.talents.cloud.talent.common.CONST;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Account;
+import seu.talents.cloud.talent.model.dao.entity.Graduation;
 import seu.talents.cloud.talent.model.dao.entity.Job;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
 import seu.talents.cloud.talent.model.dao.mapper.CompanyMapper;
+import seu.talents.cloud.talent.model.dao.mapper.GraduationMapper;
 import seu.talents.cloud.talent.model.dao.mapper.JobMapper;
 import seu.talents.cloud.talent.model.dto.post.*;
 import seu.talents.cloud.talent.model.dto.returnDTO.JobDTO;
@@ -31,6 +33,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private GraduationMapper graduationMapper;
 
     @Override
     public void registerUser(Register register,String accountId) {
@@ -218,6 +223,31 @@ public class AccountServiceImpl implements AccountService {
         ;
         jobMapper.updateByExample(job,example2);
 
+    }
+
+    @Override
+    public void graduationLogin(Graduation graduation, String accountId) {
+        String name = graduation.getName();
+        String identify = graduation.getIdentify();
+        String gap = graduation.getGap();
+        String time = graduation.getTime();
+        Graduation graduationGet = graduationMapper.getAccountByName(name,identify);
+        //先用姓名加身份证唯一确定
+        if(graduationGet!=null){
+            if(graduationGet.getGap()==gap||graduationGet.getTime()==time){
+                //二匹配一就成功
+                addAlumniInAccount(graduation,accountId);
+            }
+        }else {
+
+        }
+    }
+
+    public void addAlumniInAccount(Graduation graduation, String accountId){
+        String name = graduation.getName();
+        String gap = graduation.getGap();
+        String time = graduation.getTime();
+        accountMapper.updateAlumniInfo(name,time,gap,accountId);
     }
 
 

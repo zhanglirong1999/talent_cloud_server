@@ -19,6 +19,7 @@ import seu.talents.cloud.talent.common.annotation.WebResponse;
 import seu.talents.cloud.talent.exception.BizException;
 import seu.talents.cloud.talent.model.dao.entity.Account;
 import seu.talents.cloud.talent.model.dao.entity.Favorite;
+import seu.talents.cloud.talent.model.dao.entity.Graduation;
 import seu.talents.cloud.talent.model.dao.mapper.AccountMapper;
 import seu.talents.cloud.talent.model.dao.mapper.FavoriteMapper;
 import seu.talents.cloud.talent.model.dto.PageResult;
@@ -337,6 +338,17 @@ public class AccountController {
         accountService.deleteJob(jobDeleteDTO.getJobId());
         return "success";
     }
+
+
+    @TokenRequired
+    @PostMapping("/graduation")
+    public Object graduationLogin(@RequestBody Graduation graduation){
+        String accountId = (String) request.getAttribute(CONST.ACL_ACCOUNTID);
+        return "1";
+    }
+
+
+
 
 
 }

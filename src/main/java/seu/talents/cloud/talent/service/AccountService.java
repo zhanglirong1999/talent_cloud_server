@@ -1,6 +1,7 @@
 package seu.talents.cloud.talent.service;
 
 import org.springframework.validation.annotation.Validated;
+import seu.talents.cloud.talent.model.dao.entity.Graduation;
 import seu.talents.cloud.talent.model.dto.post.*;
 
 @Validated
@@ -13,4 +14,5 @@ public interface AccountService {
     void addJob(AddJob addJob,String accountId);
     void modifyJob(ModifyJobDTO modifyJobDTO,String accountId);
     void deleteJob(Long jobId);
+    void graduationLogin(Graduation graduation,String accountId);
 }

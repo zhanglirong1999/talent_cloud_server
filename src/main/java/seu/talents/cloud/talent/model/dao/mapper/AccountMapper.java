@@ -82,6 +82,11 @@ public interface AccountMapper extends Mapper<Account> {
     @Select("select count(*) from talentCloud.account where company='${name}'")
     Integer getAccountCount(String name);
 
+    @Update("update account set name='${name}'," +
+            "gradYear='${time}',college='${college}' where accountId='${accountId}'")
+    Integer updateAlumniInfo(String name,String time,String college,String accountId);
+
+
 
 
 }
